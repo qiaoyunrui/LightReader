@@ -1,7 +1,9 @@
-package com.qiao.androidlab.lightreader;
+package com.qiao.androidlab.lightreader.Activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.qiao.androidlab.lightreader.R;
 
 public class MainActivity extends AppCompatActivity {
 

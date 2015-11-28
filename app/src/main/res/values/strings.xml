@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">LightReader</string>
+    <string name="card_title_text">Title</string>
+    <string name="card_author_text">Author</string>
+    <string name="card_time_text">2015.11.27</string>
+    <string name="card_detail">This is my first project.Thank you.</string>
 </resources>
