@@ -28,6 +28,8 @@
         android:elevation="5dp"
         android:visibility="invisible" />
 
+    -
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
@@ -36,6 +38,5 @@
     </android.support.v7.widget.RecyclerView>
 
     <include layout="@layout/card_layout" />
-
 
 </RelativeLayout>
