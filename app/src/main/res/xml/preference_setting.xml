@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="光源">
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="light_source"
+            android:summaryOff="自然光"
+            android:summaryOn="闪光灯"
+            android:title="开启闪光灯？" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="实验次数">
+        <ListPreference
+            android:dialogTitle="请选择拍照数量"
+            android:entries="@array/num_image_per_trial"
+            android:entryValues="@array/value_image_per_trial"
+            android:key="images_per_trial"
+            android:summary="请选择拍照数量"
+            android:title="拍照数量" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="识别区域">
+        <ListPreference
+            android:dialogTitle="请选择图像识别区域"
+            android:entries="@array/shape_area_read"
+            android:entryValues="@array/value_shape_area_read"
+            android:key="area_read"
+            android:summary="请选择图像识别区域"
+            android:title="识别区域" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
