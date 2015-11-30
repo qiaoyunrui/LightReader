@@ -13,9 +13,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
+
     </FrameLayout>
 
-    <ImageButton
+    <android.support.v7.widget.AppCompatImageButton
         android:id="@+id/capture"
         android:layout_width="@dimen/button_capture_width"
         android:layout_height="@dimen/button_capture_height"
@@ -23,6 +24,26 @@
         android:layout_centerHorizontal="true"
         android:background="#000e0404"
         android:scaleType="centerCrop"
-        android:src="@mipmap/ic_camera_black" />
+        android:src="@mipmap/ic_camera_black_48dp" />
+
+    <android.support.v7.widget.AppCompatImageButton
+        android:id="@+id/setting"
+        android:layout_width="@dimen/button_setting_width"
+        android:layout_height="@dimen/button_setting_height"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:background="#0000"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/ic_settings_black_48dp" />
+
+    <android.support.v7.widget.AppCompatImageButton
+        android:id="@+id/back"
+        android:layout_width="@dimen/button_setting_width"
+        android:layout_height="@dimen/button_setting_height"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="#0000"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/ic_arrow_back_black_48dp" />
 
 </RelativeLayout>

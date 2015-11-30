@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="num_image_per_trial">
+    <string-array name="pref_num_image_per_trial">
         <item>1次</item>
         <item>2次</item>
         <item>3次</item>
     </string-array>
-    <string-array name="value_image_per_trial">
+    <string-array name="pref_value_image_per_trial">
         <item>1</item>
         <item>2</item>
         <item>3</item>
     </string-array>
-    <string-array name="shape_area_read">
+    <string-array name="pref_shape_area_read">
         <item>直线</item>
         <item>较细的长方形</item>
         <item>较粗的长方形</item>
     </string-array>
-    <string-array name="value_shape_area_read">
+    <string-array name="pref_value_shape_area_read">
         <item>LINE</item>
         <item>MEDIUM_RECTANGLE</item>
         <item>RECTANGLE</item>
