@@ -16,6 +16,9 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".Activities.SettingActivity"
+            android:theme="@style/AppThemeSetting"></activity>
+        <activity
             android:name=".Activities.CameraActivity"
             android:theme="@style/NoTitleFullScreen"></activity>
     </application>

@@ -16,4 +16,5 @@
     <dimen name="button_capture_width">50dp</dimen>
     <dimen name="button_setting_width">40dp</dimen>
     <dimen name="button_setting_height">40dp</dimen>
+    <dimen name="surface_view_coordinate_show_height">400dp</dimen>
 </resources>

@@ -12,8 +12,8 @@
     </string-array>
     <string-array name="pref_shape_area_read">
         <item>直线</item>
-        <item>较细的长方形</item>
-        <item>较粗的长方形</item>
+        <item>较窄的长方形</item>
+        <item>较宽的长方形</item>
     </string-array>
     <string-array name="pref_value_shape_area_read">
         <item>LINE</item>
