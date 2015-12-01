@@ -9,4 +9,5 @@
     <color name="icons">#FFFFFF</color>
     <color name="divider">#B6B6B6</color>
     <color name="colorControlHighlight">#FFFF9270</color>
+    <!--<color name="transparent"></color>-->
 </resources>

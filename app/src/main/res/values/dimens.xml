@@ -17,4 +17,5 @@
     <dimen name="button_setting_width">40dp</dimen>
     <dimen name="button_setting_height">40dp</dimen>
     <dimen name="surface_view_coordinate_show_height">400dp</dimen>
+    <dimen name="fab_margin">10dp</dimen>
 </resources>
