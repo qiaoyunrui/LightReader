@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imageShow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:src="@mipmap/test_img" />
+
+
+    <SurfaceView
+        android:id="@+id/coordinateShow"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/surface_view_coordinate_show_height"
+        android:layout_below="@id/imageShow" />
+
+</RelativeLayout>
