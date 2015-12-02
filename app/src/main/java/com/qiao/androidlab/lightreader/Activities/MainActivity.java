@@ -4,7 +4,6 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -14,13 +13,17 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 
 import com.qiao.androidlab.lightreader.Parts.LightPic;
 import com.qiao.androidlab.lightreader.Parts.MyAdapter;
 import com.qiao.androidlab.lightreader.R;
+import com.qiao.androidlab.lightreader.db.DBCtrl;
+import com.qiao.androidlab.lightreader.db.DBUtil;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,12 +37,18 @@ public class MainActivity extends AppCompatActivity {
     private List<LightPic> datas;
     private MyAdapter adapter;
     private Intent intent;
+    private DBCtrl dbCtrl;
+    private DBUtil dbUtil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initData();
+        try {
+            initData();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         initView();
         initEvent();
         setSupportActionBar(toolbar);
@@ -53,12 +62,13 @@ public class MainActivity extends AppCompatActivity {
     /**
      * 初始化数据，从数据库中获取数据信息
      */
-    private void initData() {
-        lightPic = new LightPic(BitmapFactory.decodeResource(getResources(), R.mipmap.test_img));
+    private void initData() throws IOException {
         datas = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            datas.add(lightPic);
-        }
+        dbCtrl = new DBCtrl(this);  //数据库已经创建
+        dbUtil = new DBUtil();
+        dbUtil.mOPenorCreateDatabase(dbCtrl);
+        datas = dbUtil.mDBSelect(this);
+        Log.i("HELLO", datas.toString());
         adapter = new MyAdapter(this, datas);
     }
 

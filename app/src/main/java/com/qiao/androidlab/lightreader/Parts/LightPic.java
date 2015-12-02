@@ -12,6 +12,7 @@ public class LightPic {
     private String detail = "I am good,thank you very much!";
     private String time = "2015.11.27";
     private Bitmap bm = null;
+    private int id;     //在数据库中的id
 
     public LightPic(Bitmap bm) {
         this.bm = bm;
@@ -63,6 +64,14 @@ public class LightPic {
 
     public Bitmap getBm() {
         return bm;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
     }
 
 }
