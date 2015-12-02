@@ -21,4 +21,5 @@
     <dimen name="reveal_view_elevation">6dp</dimen>
     <dimen name="capture_button_elevation">4dp</dimen>
     <dimen name="show_surface_elevation">3dp</dimen>
+    <dimen name="appbarlayout_height">300dp</dimen>
 </resources>

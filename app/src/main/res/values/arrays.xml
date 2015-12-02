@@ -21,4 +21,14 @@
         <item>RECTANGLE</item>
 
     </string-array>
+    <string-array name="exposure_time_type">
+        <item>较短</item>
+        <item>中等</item>
+        <item>较长</item>
+    </string-array>
+    <string-array name="exposure_time_type_value">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
 </resources>

@@ -8,7 +8,7 @@
             android:key="light_source"
             android:summaryOff="自然光"
             android:summaryOn="闪光灯"
-            android:title="开启闪光灯？" />
+            android:title="开启闪光灯" />
 
     </PreferenceCategory>
 
@@ -29,7 +29,15 @@
             android:key="area_read"
             android:summary="请选择图像识别区域"
             android:title="识别区域" />
-
+    </PreferenceCategory>
+    <PreferenceCategory android:title="曝光">
+        <ListPreference
+            android:diaLogTitle="请选择曝光时间"
+            android:entries="@array/exposure_time_type"
+            android:entryValues="@array/exposure_time_type_value"
+            android:key="exposure_time"
+            android:summary="曝光时间"
+            android:title="曝光" />
     </PreferenceCategory>
 
 </PreferenceScreen>

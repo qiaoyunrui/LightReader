@@ -13,9 +13,10 @@
             android:id="@+id/titleEditView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Title"
+            android:hint="@string/card_title_text"
             android:inputType="text"
-            android:textIsSelectable="true" />
+            android:textIsSelectable="true"
+            android:textSize="@dimen/card_title_text_size" />
 
     </android.support.design.widget.TextInputLayout>
 
@@ -28,9 +29,10 @@
             android:id="@+id/authorEditView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Author"
+            android:hint="@string/card_author_text"
             android:inputType="text"
-            android:textIsSelectable="true" />
+            android:textIsSelectable="true"
+            android:textSize="@dimen/card_author_text_size" />
 
     </android.support.design.widget.TextInputLayout>
 
@@ -43,10 +45,11 @@
             android:id="@+id/detailEditView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Author"
+            android:hint="@string/card_detail"
             android:inputType="text"
             android:lines="10"
-            android:textIsSelectable="false" />
+            android:textIsSelectable="false"
+            android:textSize="@dimen/card_detail_text_size" />
 
     </android.support.design.widget.TextInputLayout>
 
