@@ -51,7 +51,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/accent"
-        android:elevation="6dp"
+        android:elevation="@dimen/reveal_view_elevation"
         android:visibility="invisible" />
 
 </android.support.design.widget.CoordinatorLayout><!---->

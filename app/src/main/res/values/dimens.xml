@@ -18,4 +18,7 @@
     <dimen name="button_setting_height">40dp</dimen>
     <dimen name="surface_view_coordinate_show_height">400dp</dimen>
     <dimen name="fab_margin">10dp</dimen>
+    <dimen name="reveal_view_elevation">6dp</dimen>
+    <dimen name="capture_button_elevation">4dp</dimen>
+    <dimen name="show_surface_elevation">3dp</dimen>
 </resources>

@@ -7,13 +7,13 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:elevation="3dp">
+        android:layout_height="match_parent">
 
         <SurfaceView
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-+
+            android:layout_height="match_parent"
+            android:elevation="@dimen/show_surface_elevation" />
+
     </FrameLayout>
 
     <android.support.v7.widget.Toolbar
@@ -34,6 +34,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:background="#000e0404"
+        android:elevation="@dimen/capture_button_elevation"
         android:scaleType="centerCrop"
         android:src="@mipmap/ic_camera_black_48dp" />
 
