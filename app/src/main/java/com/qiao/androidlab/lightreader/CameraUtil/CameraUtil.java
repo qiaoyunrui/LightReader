@@ -21,40 +21,38 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.security.Policy;
 
 /**
  * Created by Administrator on 2015/12/3.
  */
 public class CameraUtil implements SurfaceHolder.Callback {
 
-    private static final Boolean SUN_LIGHT = false;
-    private static final Boolean LED_LIGHT = true;
+    public static final Boolean SUN_LIGHT = false;
+    public static final Boolean LED_LIGHT = true;
 
-    private static final int ONE_IMAGE = 1;
-    private static final int TWO_IMAGE = 2;
-    private static final int THREE_IMAGE = 3;
+    public static final int ONE_IMAGE = 1;
+    public static final int TWO_IMAGE = 2;
+    public static final int THREE_IMAGE = 3;
 
-    private static final int LINE_AREA = 1;
-    private static final int THIN_SQUARE_AREA = 2;
-    private static final int THICK_SQUARE_AREA = 3;
-
-    private static final int SHORT_TIME_EXPOSURE = 1;
-    private static final int MEDIUM_TIME_EXPOSURE = 2;
-    private static final int LONG_TIME_EXPOSURE = 3;
+    public static final int SHORT_TIME_EXPOSURE = 1;
+    public static final int MEDIUM_TIME_EXPOSURE = 2;
+    public static final int LONG_TIME_EXPOSURE = 3;
 
     private SurfaceView mSurfaceView;
     private SurfaceHolder surfaceHolder;
     private Boolean light_source;   //光源 true false
-    private String images_per_trial;   //拍照数量 1 2 3
-    private String area_read;   //识别区域 1 2 3
-    private String exposure_time;   //曝光时间 1 2 3
+    private int images_per_trial;   //拍照数量 1 2 3
+    private int exposure_time;   //曝光时间 1 2 3
     private File tempFile;
+
+//    private int shortTime = 0;  //曝光时间
+//    private int mediumTime = 2;
+//    private int longTime = 5;
 
     SharedPreferences sharedPreferences;
     Camera mCamera;
-    boolean isPreview = false;
     int screenWidth = 1080, screenHeight = 1920;
-    byte[] mData;
     Intent intent;
     Context context;
     Activity activity;
@@ -62,6 +60,7 @@ public class CameraUtil implements SurfaceHolder.Callback {
     private Camera.PictureCallback pictureCallback = new Camera.PictureCallback() {
         @Override
         public void onPictureTaken(byte[] data, Camera camera) {
+            Log.i("HELLO", "onPictureTaken 回调执行成功");
             if (data != null) {
                 Log.i("HELLO", data.toString());
                 tempFile = new File(Environment.getExternalStorageDirectory().getPath() + "/光之解读者", "temp.jpg");
@@ -85,7 +84,6 @@ public class CameraUtil implements SurfaceHolder.Callback {
                 context.startActivity(intent);
                 activity.finish();
             }
-            camera.stopPreview();
         }
     };
 
@@ -97,10 +95,6 @@ public class CameraUtil implements SurfaceHolder.Callback {
     public CameraUtil(Context context) {
         this.context = context;
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        light_source = sharedPreferences.getBoolean("light_source", SUN_LIGHT);
-        images_per_trial = sharedPreferences.getString("images_per_trial", ONE_IMAGE + "");
-        area_read = sharedPreferences.getString("area_read", LINE_AREA + "");
-        exposure_time = sharedPreferences.getString("exposure_time", SHORT_TIME_EXPOSURE + "");
     }
 
     public CameraUtil(Context context, int screenHeight, int screenWidth, SurfaceView surfaceView, Intent intent, Activity activity) {
@@ -146,18 +140,49 @@ public class CameraUtil implements SurfaceHolder.Callback {
         this.intent = intent;
     }
 
+    public void setLight_source(boolean light_source) {
+        this.light_source = light_source;
+    }
+
+    public void setImages_per_trial(int images_per_trial) {
+        this.images_per_trial = images_per_trial;
+    }
+
+    public void setExposure_time(int exposure_time) {
+        this.exposure_time = exposure_time;
+    }
 
     /**
      * 初始化相机
      */
     public void initCamera() {
+        Log.i("HELLO", screenHeight + "--" + screenWidth);
         try {
             mCamera = Camera.open();
             Camera.Parameters parameters = mCamera.getParameters();
-            parameters.setPictureSize(screenWidth, screenHeight);
-            parameters.setPreviewSize(screenWidth, screenHeight);
+            parameters.setPictureSize(screenHeight, screenWidth);
+            parameters.setPreviewSize(screenHeight, screenWidth);
+            parameters.setFlashMode(Camera.Parameters.ANTIBANDING_AUTO);
             parameters.setPictureFormat(ImageFormat.JPEG);
             parameters.setPreviewFpsRange(4, 10);
+            parameters.setJpegQuality(100);
+            if (light_source) {
+                Log.i("HELLO","闪光灯");
+                parameters.setFlashMode(Camera.Parameters.FLASH_MODE_ON);
+            } else {
+                parameters.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
+            }
+//            Log.i("HELLO",parameters.getMaxExposureCompensation() + "");
+//            Log.i("HELLO",parameters.getMinExposureCompensation() + "");
+            switch (exposure_time) {
+                case SHORT_TIME_EXPOSURE:
+                    break;
+                case MEDIUM_TIME_EXPOSURE:
+                    break;
+                case LONG_TIME_EXPOSURE:
+                    break;
+            }
+            mCamera.setParameters(parameters);
         } catch (Exception e) {
             Log.i("ERROR", "CAMERA ERROR");
             e.printStackTrace();
@@ -189,10 +214,18 @@ public class CameraUtil implements SurfaceHolder.Callback {
                 @Override
                 public void onAutoFocus(boolean success, Camera camera) {
                     if (success) {
-                        camera.takePicture(null, null, pictureCallback);
+                        Log.i("HELLO", "autoFocus 回调执行成功");
+                        try {
+                            camera.takePicture(null, null, pictureCallback);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Log.i("HELLO", "错误");
+                        }
+
                     }
                 }
             });
+
         }
 
     }
@@ -222,12 +255,11 @@ public class CameraUtil implements SurfaceHolder.Callback {
 
 
     /**
-     * 自动对焦
-     *
-     * @param pointHeight
+     * 对焦
+     *  @param pointHeight
      * @param pointWidth
      */
-    private void focues(int pointHeight, int pointWidth) {
+    public void focues(float pointHeight, float pointWidth) {
 
     }
 

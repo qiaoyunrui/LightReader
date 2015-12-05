@@ -78,7 +78,6 @@ public class ShowActivity extends AppCompatActivity {
             if (bitmap != null) {
                 imageShow.setImageBitmap(bitmap);
             }
-
         } else {
 
         }

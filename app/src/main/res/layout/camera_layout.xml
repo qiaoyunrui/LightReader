@@ -38,6 +38,7 @@
         android:layout_height="@dimen/button_capture_height"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/card_part_margin"
         android:background="#000e0404"
         android:elevation="@dimen/capture_button_elevation"
         android:scaleType="centerCrop"
