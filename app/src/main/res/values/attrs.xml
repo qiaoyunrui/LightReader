@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="DrawSurfaceView">
+        <attr name="area_read" format="enum">
+            <enum name="LINE_AREA" value="1" />
+            <enum name="THIN_SQUARE_AREA" value="2" />
+            <enum name="THICK_SQUARE_AREA" value="3" />
+        </attr>
+        <attr name="screen_height" format="integer" />
+        <attr name="screen_width" format="integer" />
+    </declare-styleable>
+</resources>

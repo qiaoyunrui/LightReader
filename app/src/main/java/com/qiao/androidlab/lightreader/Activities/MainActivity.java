@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 
+import com.qiao.androidlab.lightreader.CameraUtil.CameraUtil;
 import com.qiao.androidlab.lightreader.Parts.LightPic;
 import com.qiao.androidlab.lightreader.Parts.MyAdapter;
 import com.qiao.androidlab.lightreader.R;
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private Intent intent;
     private DBCtrl dbCtrl;
     private DBUtil dbUtil;
+    private CameraUtil cameraUtil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,11 +54,15 @@ public class MainActivity extends AppCompatActivity {
         initView();
         initEvent();
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        getSupportActionBar().setTitle(R.string.mainTitle);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
         recyclerView.setAdapter(adapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        intent = new Intent(MainActivity.this, SettingActivity.class);
+        intent = new Intent(MainActivity.this, CameraActivity.class);
+        cameraUtil = new CameraUtil(this);
     }
 
     /**
@@ -67,8 +73,7 @@ public class MainActivity extends AppCompatActivity {
         dbCtrl = new DBCtrl(this);  //数据库已经创建
         dbUtil = new DBUtil();
         dbUtil.mOPenorCreateDatabase(dbCtrl);
-        datas = dbUtil.mDBSelect(this);
-        Log.i("HELLO", datas.toString());
+        datas = dbUtil.mDBSelect(this); //查询数据
         adapter = new MyAdapter(this, datas);
     }
 
@@ -133,4 +138,6 @@ public class MainActivity extends AppCompatActivity {
         reveal_view.setVisibility(View.INVISIBLE);
         super.onResume();
     }
+
 }
+

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/camera_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -10,18 +11,22 @@
         android:layout_height="match_parent">
 
         <SurfaceView
+            android:id="@+id/cameraSurface"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:elevation="@dimen/show_surface_elevation" />
 
+        <com.qiao.androidlab.lightreader.Parts.DrawSurfaceView
+            android:id="@+id/drawSurfaceView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:area_read="LINE_AREA" />
     </FrameLayout>
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/camera_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:alpha="0.5"
-        android:background="@color/primary"
         android:elevation="4dp"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:theme="@style/ThemeOverlay.AppCompat.ActionBar" />

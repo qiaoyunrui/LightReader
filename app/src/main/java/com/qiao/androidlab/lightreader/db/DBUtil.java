@@ -34,7 +34,7 @@ public class DBUtil {
     /**
      * 创建或打开数据库
      *
-     * @param path 数据库文件的路径
+     * @param dbCtrl
      * @return 返回一个数据库
      */
     public void mOPenorCreateDatabase(DBCtrl dbCtrl) {

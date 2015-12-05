@@ -5,4 +5,5 @@
     <string name="card_time_text">2015.11.27</string>
     <string name="card_detail">This is my first project.Thank you.</string>
     <string name="pref_ringtone_silent">Silent</string>
+    <string name="mainTitle">首页</string>
 </resources>

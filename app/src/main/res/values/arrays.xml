@@ -16,9 +16,9 @@
         <item>较宽的长方形</item>
     </string-array>
     <string-array name="pref_value_shape_area_read">
-        <item>LINE</item>
-        <item>MEDIUM_RECTANGLE</item>
-        <item>RECTANGLE</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
 
     </string-array>
     <string-array name="exposure_time_type">
