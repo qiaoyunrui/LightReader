@@ -12,7 +12,7 @@ public class DBCtrl extends SQLiteOpenHelper {
     private static final String DE_NAME = "lightpic.db";
     private static final int VERSION = 1;
     private static final String SQL_CREATE = "CREATE TABLE light_info(" +
-            "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+            "id INTEGER PRIMARY KEY AUTOINCREMENT NULL," +
             "title VARCHAR(50)," +
             "author VARCHAR(20)," +
             "time VARCHAR(20)," +

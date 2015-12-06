@@ -76,14 +76,15 @@ public class CameraActivity extends AppCompatActivity {
         detector = new GestureDetector(this, new GestureDetector.OnGestureListener() {
             @Override
             public boolean onDown(MotionEvent e) {
+//                Log.i("HELLO", "LongHello");
+//                Log.i("HELLO", e.getX() + "+++++" + e.getY());
+                drawSurfaceView.DrawCircle(e.getX(), e.getY());
+                cameraUtil.focues(e.getX(), e.getY());
                 return false;
             }
 
             @Override
             public void onShowPress(MotionEvent e) {
-                Log.i("HELLO", e.getX() + "+++++" + e.getY());
-                drawSurfaceView.DrawCircle(e.getX(), e.getY());
-                cameraUtil.focues(e.getX(), e.getY());
             }
 
             @Override
@@ -99,6 +100,7 @@ public class CameraActivity extends AppCompatActivity {
             @Override
             public void onLongPress(MotionEvent e) {
 
+
             }
 
             @Override
@@ -108,6 +110,12 @@ public class CameraActivity extends AppCompatActivity {
         });
         UpdateDrawSurface();
         UpdateCameraUtil();
+    }
+
+    //将Activity上的触摸操作交给GestureDetector操作
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        return detector.onTouchEvent(event);
     }
 
     @Override

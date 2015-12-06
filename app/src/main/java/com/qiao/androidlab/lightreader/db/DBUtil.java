@@ -53,7 +53,7 @@ public class DBUtil {
         return SUCCESS;
     }
 
-    public int mDBDelect(int id) {
+    public int mDBDelete(int id) {
         if (mdb == null) {
             return FAIL;
         }

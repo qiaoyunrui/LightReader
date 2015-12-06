@@ -2,10 +2,12 @@ package com.qiao.androidlab.lightreader.Parts;
 
 import android.graphics.Bitmap;
 
+import java.io.Serializable;
+
 /**
  * Created by Administrator on 2015/11/30.
  */
-public class LightPic {
+public class LightPic implements Serializable {
 
     private String title = "title";
     private String author = "author";

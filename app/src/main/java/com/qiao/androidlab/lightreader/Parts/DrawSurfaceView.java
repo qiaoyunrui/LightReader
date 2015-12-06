@@ -6,6 +6,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PixelFormat;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.ColorDrawable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.SurfaceHolder;
@@ -128,11 +130,31 @@ public class DrawSurfaceView extends SurfaceView implements SurfaceHolder.Callba
     }
 
     public void DrawCircle(float pointX, float pointY) {
-        Paint paint = new Paint();
-        paint.setStrokeWidth(5.0f);
-        paint.setColor(Color.BLUE);
+        Paint paintBlue = new Paint();
+        Paint paintBlack = new Paint();
+        paintBlue.setStrokeWidth(5.0f);
+        paintBlue.setColor(Color.BLUE);
+        paintBlue.setStyle(Paint.Style.STROKE);
+        paintBlack.setStrokeWidth(5.0f);
+        paintBlack.setColor(Color.BLACK);
         Canvas canvas = surfaceHolder.lockCanvas();
-        canvas.drawCircle(pointX, pointY, radius, paint);
+        canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR); //清除画布内容
+        canvas.drawCircle(pointX, pointY, radius, paintBlue);
+        switch (area_read) {
+            case LINE_AREA:
+                canvas.drawLine(screenWidth / 2, 0, screenWidth / 2, screenHeight, paintBlack);
+                break;
+            case THIN_SQUARE_AREA:
+                canvas.drawLine(screenWidth / 2 - smallOffset, 0, screenWidth / 2 - smallOffset, screenHeight, paintBlack);
+                canvas.drawLine(screenWidth / 2 + smallOffset, 0, screenWidth / 2 + smallOffset, screenHeight, paintBlack);
+                break;
+            case THICK_SQUARE_AREA:
+                canvas.drawLine(screenWidth / 2 - bigOffset, 0, screenWidth / 2 - bigOffset, screenHeight, paintBlack);
+                canvas.drawLine(screenWidth / 2 + bigOffset, 0, screenWidth / 2 + bigOffset, screenHeight, paintBlack);
+                break;
+            default:
+                Log.i("ERROR", "识别区域错误");
+        }
         surfaceHolder.unlockCanvasAndPost(canvas);
 
     }

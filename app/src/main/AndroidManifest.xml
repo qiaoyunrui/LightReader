@@ -33,7 +33,8 @@
             android:theme="@style/NoTitleFullScreen"></activity>
         <activity
             android:name=".Activities.ShowActivity"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustUnspecified|adjustResize"></activity>
     </application>
 
 </manifest>
