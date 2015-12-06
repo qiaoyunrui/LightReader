@@ -70,6 +70,7 @@ public class CameraActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("相机");
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setDisplayShowHomeEnabled(true);
         drawSurfaceView.setScreenHeight(screenHeight);
         drawSurfaceView.setScreenWidth(screenWidth);
         cameraUtil = new CameraUtil(this, screenHeight, screenWidth, surfaceView, intent, this);
@@ -190,6 +191,11 @@ public class CameraActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_setting) {
             startActivity(settingIntent);
+            return true;
+        }
+        if (id == R.id.home) {
+            onBackPressed();
+            Log.i("HELLO", "BACK");
             return true;
         }
 

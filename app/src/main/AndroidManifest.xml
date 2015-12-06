@@ -35,6 +35,9 @@
             android:name=".Activities.ShowActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustUnspecified|adjustResize"></activity>
+        <activity
+            android:name=".Activities.CenterActivity"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

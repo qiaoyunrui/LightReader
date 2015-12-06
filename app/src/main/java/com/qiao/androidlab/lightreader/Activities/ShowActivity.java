@@ -11,23 +11,36 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.text.format.Time;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.qiao.androidlab.lightreader.Parts.LightPic;
 import com.qiao.androidlab.lightreader.R;
+import com.qiao.androidlab.lightreader.db.DBCtrl;
+import com.qiao.androidlab.lightreader.db.DBUtil;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.zip.Inflater;
@@ -40,6 +53,7 @@ public class ShowActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private ImageView imageShow;
     private SurfaceView coordinateShow;
+    private RelativeLayout showRoot;
     private FloatingActionButton save;
     private String path;
     private Bitmap[] bitmap = new Bitmap[]{null, null, null, null};
@@ -60,6 +74,9 @@ public class ShowActivity extends AppCompatActivity {
     private String detail;
     private Bitmap bm;
 
+    private DBCtrl dbCtrl;
+    private DBUtil dbUtil;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,11 +92,14 @@ public class ShowActivity extends AppCompatActivity {
     }
 
     private void initData() {
-
+        dbCtrl = new DBCtrl(this);
+        dbUtil = new DBUtil();
+        dbUtil.mOPenorCreateDatabase(dbCtrl);
     }
 
     private void initView() {
         toolbar = (Toolbar) findViewById(R.id.show_toolbar);
+        showRoot = (RelativeLayout) findViewById(R.id.showRoot);
         imageShow = (ImageView) findViewById(R.id.imageShow);
         coordinateShow = (SurfaceView) findViewById(R.id.coordinateShow);
         save = (FloatingActionButton) findViewById(R.id.save);
@@ -90,7 +110,6 @@ public class ShowActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 ShowMessageDialog();
-                createLightPic();
             }
         });
     }
@@ -98,28 +117,41 @@ public class ShowActivity extends AppCompatActivity {
     /**
      * 设置获取到的图片
      */
-    private void setShowImage() {
-        picNum = getIntent().getIntExtra("picNum", 1);
-        Log.i("HELLO", "picNum is " + picNum);
-        int sign;
-        for (sign = 1; sign <= picNum; sign++) {
-            path = getIntent().getStringExtra("picPath" + sign);
-            Log.i("HELLO", path);
-            bitmap[sign] = BitmapFactory.decodeFile(path);
-            Log.i("HELLO", bitmap[sign].toString());
+    private void setShowImage() {   //设置获取到的照片
+        if (true) { //相机拍照获得的照片
+            picNum = getIntent().getIntExtra("picNum", 1);
+            Log.i("HELLO", "picNum is " + picNum);
+            int sign;
+            for (sign = 1; sign <= picNum; sign++) {
+                path = getIntent().getStringExtra("picPath" + sign);
+                Log.i("HELLO", path);
+                bitmap[sign] = BitmapFactory.decodeFile(path);
+                Log.i("HELLO", bitmap[sign].toString());
+            }
+            Matrix matrix = new Matrix();
+            matrix.postRotate(90);
+            bitmap[picNum] = bitmap[picNum].createBitmap(bitmap[picNum], 0, 0, bitmap[picNum].getWidth(), bitmap[picNum].getHeight(), matrix, true);
+            if (bitmap[picNum] != null) {
+                imageShow.setImageBitmap(bitmap[picNum]);     //显示最后一张图片
+            }
+            bm = bitmap[picNum];    //设置将要存储的图片
+        } else {    //从相册获得的照片
+            /**
+             * 1.通过getData获取得到的Uri
+             * 2.将Uri转化为bitmap
+             * 3.ImageView设置图像
+             */
         }
-        Matrix matrix = new Matrix();
-        matrix.postRotate(90);
-        bitmap[picNum] = bitmap[picNum].createBitmap(bitmap[picNum], 0, 0, bitmap[picNum].getWidth(), bitmap[picNum].getHeight(), matrix, true);
-        if (bitmap[picNum] != null) {
-            imageShow.setImageBitmap(bitmap[picNum]);     //显示最后一张图片
-        }
+
     }
 
     //展示对话框
     private void ShowMessageDialog() {
         View view = loadView();
         initPartView(view);
+        setTextLength(titleEditLayout, 10);
+        setTextLength(authorEditLayout, 10);
+        setTextLength(detailEditLayout, 100);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setView(view)
                 .setTitle("请输入信息")
@@ -127,7 +159,32 @@ public class ShowActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         getMessage();
-
+                        createLightPic();
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mmZ");
+                        String picName = dateFormat.format(new java.util.Date());
+                        File file = new File(Environment.getExternalStorageDirectory().getPath() + "/光之解读者", picName + ".jpg");    //设置保存图片的路径
+                        FileOutputStream outStream = null;
+                        try {
+                            //打开指定文件对应的输出
+                            outStream = new FileOutputStream(file);
+                            //把位图输出到指定文件中
+                            bm.compress(Bitmap.CompressFormat.JPEG, 100, outStream);
+                            outStream.close();
+                            Snackbar.make(showRoot, "保存成功", Snackbar.LENGTH_SHORT).show();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            Snackbar.make(showRoot, "未知错误", Snackbar.LENGTH_SHORT).show();
+                        }
+                        Uri picUri = Uri.parse(file.toString());    //将File转化为Uri
+                        dbUtil.mDBInsert(lightPic, picUri);  //将这条记录存入数据库
+                        Intent intent = new Intent(ShowActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                        /**
+                         * 1.将图片保存在本地。oK
+                         * 2.将对象存入数据库 OK
+                         * 3.回到主页面
+                         */
                     }
                 })
                 .setNegativeButton("取消", null);
@@ -138,14 +195,20 @@ public class ShowActivity extends AppCompatActivity {
      * 获取从对话框输入的信息
      */
     private void getMessage() {
-
+        title = titleEdit.getText().toString();
+        author = authorEdit.getText().toString();
+        detail = detailEdit.getText().toString();
     }
 
-    //构建一个LightPic对象
+    /**
+     * 构建一个LightPic对象
+     */
     private void createLightPic() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         time = dateFormat.format(new java.util.Date());
-        bm = bitmap[picNum];
+//        Matrix matrix = new Matrix();
+//        matrix.postRotate(90);      //旋转角度
+//        bm = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(), bm.getHeight(), matrix, true);
         lightPic = new LightPic(title, author, detail, time, bm);
     }
 
@@ -166,7 +229,54 @@ public class ShowActivity extends AppCompatActivity {
 
         titleEditLayout = (TextInputLayout) parent.findViewById(R.id.dialogTitleEditLayout);
         authorEditLayout = (TextInputLayout) parent.findViewById(R.id.dialogAuthorEditLayout);
-        detailEditLayout = (TextInputLayout) findViewById(R.id.dialogDetailEditLayout);
+        detailEditLayout = (TextInputLayout) parent.findViewById(R.id.dialogDetailEditLayout);
+    }
+
+    /**
+     * 设置输入框输入的最大长度
+     *
+     * @param textInputLayout
+     * @param length
+     */
+    private void setTextLength(final TextInputLayout textInputLayout, final int length) {
+        textInputLayout.getEditText().addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() > 10) {
+                    textInputLayout.setError("不能大于" + length + "个字符");     //设置错误信息
+                    textInputLayout.setErrorEnabled(true);     //显示错误信息
+                } else {
+                    textInputLayout.setErrorEnabled(false);     //隐藏错误信息
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.home) {
+            onBackPressed();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 }

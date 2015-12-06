@@ -42,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
     private Intent intent;
     private DBCtrl dbCtrl;
     private DBUtil dbUtil;
-    private CameraUtil cameraUtil;
 
 
     @Override
@@ -65,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         intent = new Intent(MainActivity.this, CameraActivity.class);
-        cameraUtil = new CameraUtil(this);
     }
 
     /**
@@ -76,8 +74,8 @@ public class MainActivity extends AppCompatActivity {
         dbCtrl = new DBCtrl(this);  //数据库已经创建
         dbUtil = new DBUtil();
         dbUtil.mOPenorCreateDatabase(dbCtrl);
-        datas = dbUtil.mDBSelect(this); //查询数据
-        adapter = new MyAdapter(this, datas);
+//        datas = dbUtil.mDBSelect(this); //查询数据
+        adapter = new MyAdapter(this, datas);   //将数据同步到列表里
     }
 
     private void initView() {
@@ -88,14 +86,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initEvent() {
-
         adapter.setmOnItemClickListener(new MyAdapter.OnItemClickListener() {
             @Override
             public void OnItemClick(View view, int position) {
                 Snackbar.make(recyclerView, "This is " + position, Snackbar.LENGTH_SHORT).setAction("OK", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
                     }
                 }).show();
             }
@@ -154,7 +150,6 @@ public class MainActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_about) {
 //            AlertDialog builder = new AlertDialog.Builder(this)

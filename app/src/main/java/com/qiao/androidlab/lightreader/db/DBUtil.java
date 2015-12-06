@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.util.Log;
 
 import com.qiao.androidlab.lightreader.Parts.LightPic;
 
@@ -65,6 +66,7 @@ public class DBUtil {
     public List<LightPic> mDBSelect(Context context) throws IOException {
         List<LightPic> lightList = new ArrayList<>();
         Cursor cursor = mdb.rawQuery(SQL_SELECT, null);
+//        Log.i("HELLO",cursor.toString());
         while (cursor.moveToNext()) {
             mLightPic.setId(cursor.getInt(0));
             mLightPic.setTitle(cursor.getString(1));
