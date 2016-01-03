@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/LightReader.iml" filepath="$PROJECT_DIR$/LightReader.iml" />
-      <module fileurl="file://$PROJECT_DIR$/androidllayouttest/androidllayouttest.iml" filepath="$PROJECT_DIR$/androidllayouttest/androidllayouttest.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
