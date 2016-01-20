@@ -49,7 +49,6 @@ import java.util.zip.Inflater;
  * 获取图片后展示函数的界面
  */
 public class ShowActivity extends AppCompatActivity {
-
     private Toolbar toolbar;
     private ImageView imageShow;
     private SurfaceView coordinateShow;
@@ -120,13 +119,13 @@ public class ShowActivity extends AppCompatActivity {
     private void setShowImage() {   //设置获取到的照片
         if (true) { //相机拍照获得的照片
             picNum = getIntent().getIntExtra("picNum", 1);
-            Log.i("HELLO", "picNum is " + picNum);
+            //Log.i("HELLO", "picNum is " + picNum);
             int sign;
             for (sign = 1; sign <= picNum; sign++) {
                 path = getIntent().getStringExtra("picPath" + sign);
-                Log.i("HELLO", path);
+//                Log.i("HELLO", path);
                 bitmap[sign] = BitmapFactory.decodeFile(path);
-                Log.i("HELLO", bitmap[sign].toString());
+//                Log.i("HELLO", bitmap[sign].toString());
             }
             Matrix matrix = new Matrix();
             matrix.postRotate(90);
@@ -177,8 +176,8 @@ public class ShowActivity extends AppCompatActivity {
                         }
                         Uri picUri = Uri.parse(file.toString());    //将File转化为Uri
                         dbUtil.mDBInsert(lightPic, picUri);  //将这条记录存入数据库
-                        Intent intent = new Intent(ShowActivity.this, MainActivity.class);
-                        startActivity(intent);
+                        //Intent intent = new Intent(ShowActivity.this, MainActivity.class);
+                        //startActivity(intent);
                         finish();
                         /**
                          * 1.将图片保存在本地。oK
@@ -271,7 +270,7 @@ public class ShowActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         //noinspection SimplifiableIfStatement
-        if (id == R.id.home) {
+        if (id == android.R.id.home){
             onBackPressed();
             return true;
         }

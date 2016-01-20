@@ -16,6 +16,8 @@ public class LightPic implements Serializable {
     private Bitmap bm = null;
     private int id;     //在数据库中的id
 
+    public LightPic() {}
+
     public LightPic(Bitmap bm) {
         this.bm = bm;
     }

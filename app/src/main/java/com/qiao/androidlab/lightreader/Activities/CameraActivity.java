@@ -188,12 +188,11 @@ public class CameraActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_setting) {
             startActivity(settingIntent);
             return true;
         }
-        if (id == R.id.home) {
+        if (id == android.R.id.home) {
             onBackPressed();
             Log.i("HELLO", "BACK");
             return true;

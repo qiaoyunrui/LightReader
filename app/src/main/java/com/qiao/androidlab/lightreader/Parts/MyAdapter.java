@@ -40,6 +40,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
         mInflater = LayoutInflater.from(context);
     }
 
+    public void setmDatas(List<LightPic> mDatas) {
+        this.mDatas = mDatas;
+    }
+
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = mInflater.inflate(R.layout.card_layout, parent, false);
@@ -118,7 +122,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
         notifyItemRemoved(position);
     }
 
-
     boolean isNull(Object o) {
         if (o == null) {
             return true;
@@ -126,7 +129,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
             return false;
         }
     }
-
 }
 
 class MyViewHolder extends RecyclerView.ViewHolder {

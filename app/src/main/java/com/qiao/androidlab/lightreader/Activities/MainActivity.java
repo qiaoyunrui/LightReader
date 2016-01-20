@@ -3,13 +3,14 @@ package com.qiao.androidlab.lightreader.Activities;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
+import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,8 +20,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewAnimationUtils;
+import android.widget.ProgressBar;
 
-import com.qiao.androidlab.lightreader.CameraUtil.CameraUtil;
 import com.qiao.androidlab.lightreader.Parts.LightPic;
 import com.qiao.androidlab.lightreader.Parts.MyAdapter;
 import com.qiao.androidlab.lightreader.R;
@@ -37,41 +38,53 @@ public class MainActivity extends AppCompatActivity {
     private android.support.v7.widget.RecyclerView recyclerView;
     private android.support.design.widget.FloatingActionButton fab;
     private View reveal_view;
+    private ProgressBar progressBar;    //圆形进度条
+    private SwipeRefreshLayout swipeRefreshLayout;
     private LightPic lightPic;
     private List<LightPic> datas;
     private MyAdapter adapter;
     private Intent intent;
     private DBCtrl dbCtrl;
     private DBUtil dbUtil;
+    private Handler handler;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        try {
-            initData();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         initView();
-        initEvent();
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setTitle(R.string.mainTitle);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         setHuillotine();
-        recyclerView.setAdapter(adapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        adapter = new MyAdapter(this, new ArrayList<LightPic>());
+        recyclerView.setAdapter(adapter);
+        handler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                if (msg.what == 0x123) { //数据加载完毕
+                    progressBar.setVisibility(View.INVISIBLE);
+                    adapter.notifyDataSetChanged();
+                }
+            }
+        };
+        progressBar.setVisibility(View.VISIBLE);    //显示进度条
+        new MyThread().start();   //开始线程
+        initEvent();
         intent = new Intent(MainActivity.this, CameraActivity.class);
     }
 
+    /**
+     * 设置铡刀菜单
+     */
     private void setHuillotine() {
-        
-    }
 
+    }
     /**
      * 初始化数据，从数据库中获取数据信息
      */
@@ -80,18 +93,22 @@ public class MainActivity extends AppCompatActivity {
         dbCtrl = new DBCtrl(this);  //数据库已经创建
         dbUtil = new DBUtil();
         dbUtil.mOPenorCreateDatabase(dbCtrl);
-//        datas = dbUtil.mDBSelect(this); //查询数据
-        adapter = new MyAdapter(this, datas);   //将数据同步到列表里
+        datas = dbUtil.mDBSelect(this); //查询数据
+//        adapter = new MyAdapter(this, datas);   //将数据同步到列表里
+        adapter.setmDatas(datas);
     }
 
     private void initView() {
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
         toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         fab = (FloatingActionButton) findViewById(R.id.fab);
         reveal_view = findViewById(R.id.reveal_view);
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
     }
 
     private void initEvent() {
+        /*错误：adapter是空的，原因是：*/
         adapter.setmOnItemClickListener(new MyAdapter.OnItemClickListener() {
             @Override
             public void OnItemClick(View view, int position) {
@@ -104,7 +121,16 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void OnItemLongClick(View view, int position) {
-
+                dbCtrl = new DBCtrl(MainActivity.this);  //数据库已经创建
+                dbUtil = new DBUtil();
+                dbUtil.mOPenorCreateDatabase(dbCtrl);
+                dbUtil.mDBDelete(position);
+                adapter.deleteDate(position);
+                Snackbar.make(recyclerView, "删除成功", Snackbar.LENGTH_SHORT).setAction("OK", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                    }
+                }).show();
             }
         });
 
@@ -136,6 +162,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+//                adapter.notifyDataSetChanged();     //刷新列表
+                new MyThread().start();   //开始线程
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
     }
 
     @Override
@@ -158,17 +193,25 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_about) {
-//            AlertDialog builder = new AlertDialog.Builder(this)
-//                    .setTitle("关于")
-//                    .setIcon(R.mipmap.ic_launcher)
-//                    .setMessage("NUC Andoid Lab\n乔云瑞")
-//                    .setPositiveButton("确定", null)
-//                    .create();
-//            builder.show();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    class MyThread extends Thread {
+
+        @Override
+        public void run() {
+            try {
+                initData();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Message message = new Message();
+            message.what = 0x123;
+            handler.sendMessage(message);
+        }
     }
 
 }

@@ -26,7 +26,6 @@ import java.util.List;
  */
 public class SettingActivity extends AppCompatPreferenceActivity {
 
-
     /**
      * 及时更新表单数据
      */
