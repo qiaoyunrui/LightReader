@@ -4,12 +4,15 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -20,8 +23,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewAnimationUtils;
+import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 
+import com.androidlab.qiao.guillotineview.animtor.GuillotineAnimtor;
 import com.qiao.androidlab.lightreader.Parts.LightPic;
 import com.qiao.androidlab.lightreader.Parts.MyAdapter;
 import com.qiao.androidlab.lightreader.R;
@@ -40,7 +46,10 @@ public class MainActivity extends AppCompatActivity {
     private View reveal_view;
     private ProgressBar progressBar;    //圆形进度条
     private SwipeRefreshLayout swipeRefreshLayout;
-    private LightPic lightPic;
+    private ImageButton openButton;
+    private ImageButton closeButton;
+    private FrameLayout guillotineView;
+
     private List<LightPic> datas;
     private MyAdapter adapter;
     private Intent intent;
@@ -56,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         initView();
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
-        getSupportActionBar().setTitle(R.string.mainTitle);
+        getSupportActionBar().setTitle(null);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         setHuillotine();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -83,8 +92,14 @@ public class MainActivity extends AppCompatActivity {
      * 设置铡刀菜单
      */
     private void setHuillotine() {
-
+        new GuillotineAnimtor.Builder()
+                .setActionbar(toolbar)
+                .setCloseButton(closeButton)
+                .setOpenButton(openButton)
+                .setGuillotineView(guillotineView)
+                .build();
     }
+
     /**
      * 初始化数据，从数据库中获取数据信息
      */
@@ -94,7 +109,6 @@ public class MainActivity extends AppCompatActivity {
         dbUtil = new DBUtil();
         dbUtil.mOPenorCreateDatabase(dbCtrl);
         datas = dbUtil.mDBSelect(this); //查询数据
-//        adapter = new MyAdapter(this, datas);   //将数据同步到列表里
         adapter.setmDatas(datas);
     }
 
@@ -105,6 +119,9 @@ public class MainActivity extends AppCompatActivity {
         fab = (FloatingActionButton) findViewById(R.id.fab);
         reveal_view = findViewById(R.id.reveal_view);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
+        openButton = (ImageButton) findViewById(R.id.hamburger);
+        closeButton = (ImageButton) findViewById(R.id.guillotine_hamburger);
+        guillotineView = (FrameLayout) findViewById(R.id.guillotine_view);
     }
 
     private void initEvent() {
@@ -138,6 +155,7 @@ public class MainActivity extends AppCompatActivity {
             @TargetApi(Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View v) {
+                checkCameraPremission();
                 if (Build.VERSION.SDK_INT >= 21) {
                     intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     int[] location = new int[2];
@@ -145,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
                     int centerX = location[0];
                     int centerY = location[1];
                     Animator animShow = ViewAnimationUtils.createCircularReveal(reveal_view, centerX, centerY, 0, 1920);
-                    animShow.setDuration(350);
+                    animShow.setDuration(250);
                     reveal_view.setVisibility(View.VISIBLE);
                     animShow.addListener(new AnimatorListenerAdapter() {
                         @Override
@@ -211,6 +229,16 @@ public class MainActivity extends AppCompatActivity {
             Message message = new Message();
             message.what = 0x123;
             handler.sendMessage(message);
+        }
+    }
+
+    /**
+     * 检查相机权限
+     */
+    private void checkCameraPremission() {
+        int checkCameraPermission = ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA);
+        if (checkCameraPermission != PackageManager.PERMISSION_GRANTED) {    //没有权限
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.CAMERA}, 1);    //申请权限
         }
     }
 

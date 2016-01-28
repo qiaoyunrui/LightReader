@@ -4,12 +4,15 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.ImageFormat;
 import android.graphics.Rect;
 import android.hardware.Camera;
 import android.net.Uri;
 import android.os.Environment;
 import android.preference.PreferenceManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.Surface;
 import android.view.SurfaceHolder;
@@ -25,6 +28,7 @@ import java.io.IOException;
 import java.security.Policy;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.jar.Manifest;
 
 /**
  * Created by Administrator on 2015/12/3.
@@ -64,18 +68,18 @@ public class CameraUtil implements SurfaceHolder.Callback {
      *
      * @param context
      */
-    public CameraUtil(Context context) {
+    public CameraUtil(Context context, Activity activity) {
         this.context = context;
+        this.activity = activity;
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
     public CameraUtil(Context context, int screenHeight, int screenWidth, SurfaceView surfaceView, Intent intent, Activity activity) {
-        this(context);
+        this(context, activity);
         this.mSurfaceView = surfaceView;
         this.screenHeight = screenHeight;
         this.screenWidth = screenWidth;
         this.intent = intent;
-        this.activity = activity;
         surfaceHolder = mSurfaceView.getHolder();
         surfaceHolder.addCallback(this);
     }
@@ -143,8 +147,6 @@ public class CameraUtil implements SurfaceHolder.Callback {
             } else {
                 parameters.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
             }
-//            Log.i("HELLO",parameters.getMaxExposureCompensation() + "");
-//            Log.i("HELLO",parameters.getMinExposureCompensation() + "");
             switch (exposure_time) {
                 case SHORT_TIME_EXPOSURE:
                     break;

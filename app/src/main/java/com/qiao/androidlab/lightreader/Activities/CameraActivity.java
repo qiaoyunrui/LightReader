@@ -3,9 +3,12 @@ package com.qiao.androidlab.lightreader.Activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatImageButton;
@@ -70,7 +73,6 @@ public class CameraActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("相机");
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        getSupportActionBar().setDisplayShowHomeEnabled(true);
         drawSurfaceView.setScreenHeight(screenHeight);
         drawSurfaceView.setScreenWidth(screenWidth);
         cameraUtil = new CameraUtil(this, screenHeight, screenWidth, surfaceView, intent, this);
@@ -220,4 +222,7 @@ public class CameraActivity extends AppCompatActivity {
         cameraUtil.setImages_per_trial(images_per_trial);
         cameraUtil.setExposure_time(exposure_time);
     }
+
+
+
 }
