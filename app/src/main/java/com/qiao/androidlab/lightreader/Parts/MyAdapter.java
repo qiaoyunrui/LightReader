@@ -21,23 +21,16 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
     private LayoutInflater mInflater;
     private Context mContext;
     private List<LightPic> mDatas;
-
-    public interface OnItemClickListener {
-        void OnItemClick(View view, int position);
-
-        void OnItemLongClick(View view, int position);
-    }
-
     private OnItemClickListener mOnItemClickListener;
-
-    public void setmOnItemClickListener(OnItemClickListener listener) {
-        this.mOnItemClickListener = listener;
-    }
 
     public MyAdapter(Context context, List<LightPic> datas) {
         this.mContext = context;
         this.mDatas = datas;
         mInflater = LayoutInflater.from(context);
+    }
+
+    public void setmOnItemClickListener(OnItemClickListener listener) {
+        this.mOnItemClickListener = listener;
     }
 
     public void setmDatas(List<LightPic> mDatas) {
@@ -122,12 +115,22 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
         notifyItemRemoved(position);
     }
 
+    public LightPic getLightPic(int position) {
+        return mDatas.get(position);
+    }
+
     boolean isNull(Object o) {
         if (o == null) {
             return true;
         } else {
             return false;
         }
+    }
+
+    public interface OnItemClickListener {
+        void OnItemClick(View view, int position);
+
+        void OnItemLongClick(View view, int position);
     }
 }
 

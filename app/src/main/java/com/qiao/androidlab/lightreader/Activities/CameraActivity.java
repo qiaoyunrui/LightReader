@@ -40,6 +40,12 @@ import java.io.IOException;
  */
 public class CameraActivity extends AppCompatActivity {
 
+    WindowManager windowManager;
+    Display display;
+    DisplayMetrics metrics;
+    int screenHeight;
+    int screenWidth;
+    GestureDetector detector;
     private Toolbar toolbar;
     private RelativeLayout root;
     private SurfaceView surfaceView;
@@ -47,12 +53,6 @@ public class CameraActivity extends AppCompatActivity {
     private AppCompatImageButton capture;
     private Intent intent;
     private CameraUtil cameraUtil;
-    WindowManager windowManager;
-    Display display;
-    DisplayMetrics metrics;
-    int screenHeight;
-    int screenWidth;
-    GestureDetector detector;
     private Intent settingIntent;
     private SharedPreferences sharedPreferences;
 
@@ -79,8 +79,6 @@ public class CameraActivity extends AppCompatActivity {
         detector = new GestureDetector(this, new GestureDetector.OnGestureListener() {
             @Override
             public boolean onDown(MotionEvent e) {
-//                Log.i("HELLO", "LongHello");
-//                Log.i("HELLO", e.getX() + "+++++" + e.getY());
                 drawSurfaceView.DrawCircle(e.getX(), e.getY());
                 cameraUtil.focues(e.getX(), e.getY());
                 return false;

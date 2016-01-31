@@ -16,7 +16,10 @@ public class LightPic implements Serializable {
     private Bitmap bm = null;
     private int id;     //在数据库中的id
 
-    public LightPic() {}
+    private String path;    //图片路径
+
+    public LightPic() {
+    }
 
     public LightPic(Bitmap bm) {
         this.bm = bm;
@@ -30,52 +33,60 @@ public class LightPic implements Serializable {
         this.bm = bm;
     }
 
-    public void setTitle(String name) {
-        this.title = name;
-    }
-
     public String getTitle() {
         return title;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setTitle(String name) {
+        this.title = name;
     }
 
     public String getAuthor() {
         return author;
     }
 
-    public void setDetail(String detail) {
-        this.detail = detail;
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     public String getDetail() {
         return detail;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setDetail(String detail) {
+        this.detail = detail;
     }
 
     public String getTime() {
         return time;
     }
 
-    public void setBm(Bitmap bm) {
-        this.bm = bm;
+    public void setTime(String time) {
+        this.time = time;
     }
 
     public Bitmap getBm() {
         return bm;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setBm(Bitmap bm) {
+        this.bm = bm;
     }
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 
 }

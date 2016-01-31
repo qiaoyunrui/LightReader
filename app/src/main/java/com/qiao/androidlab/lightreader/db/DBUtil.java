@@ -108,6 +108,7 @@ public class DBUtil {
             mLightPic.setTime(cursor.getString(3));
             mLightPic.setDetail(cursor.getString(4));
             mLightPic.setBm(BitmapFactory.decodeFile(cursor.getString(5)));
+            mLightPic.setPath(cursor.getString(5));
             lightList.add(mLightPic);
         }
         cursor.close();

@@ -19,6 +19,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,6 +31,7 @@ import android.widget.ProgressBar;
 import com.androidlab.qiao.guillotineview.animtor.GuillotineAnimtor;
 import com.qiao.androidlab.lightreader.Parts.LightPic;
 import com.qiao.androidlab.lightreader.Parts.MyAdapter;
+import com.qiao.androidlab.lightreader.Parts.SerializableLightPic;
 import com.qiao.androidlab.lightreader.R;
 import com.qiao.androidlab.lightreader.db.DBCtrl;
 import com.qiao.androidlab.lightreader.db.DBUtil;
@@ -39,6 +41,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final String KEY = "LIGHT_PIC";
 
     private Toolbar toolbar;
     private android.support.v7.widget.RecyclerView recyclerView;
@@ -130,11 +134,17 @@ public class MainActivity extends AppCompatActivity {
         adapter.setmOnItemClickListener(new MyAdapter.OnItemClickListener() {
             @Override
             public void OnItemClick(View view, int position) {
-                Snackbar.make(recyclerView, "This is " + position, Snackbar.LENGTH_SHORT).setAction("OK", new View.OnClickListener() {
+                /*Snackbar.make(recyclerView, "This is " + position, Snackbar.LENGTH_SHORT).setAction("OK", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                     }
-                }).show();
+                }).show();*/
+                Intent intent = new Intent(MainActivity.this, CenterActivity.class);
+                Bundle bundle = new Bundle();
+//                Log.i("HELLO", adapter.getLightPic(position).getTitle());
+                bundle.putSerializable(KEY, new SerializableLightPic(adapter.getLightPic(position)));
+                intent.putExtras(bundle);
+                MainActivity.this.startActivity(intent);
             }
 
             @Override

@@ -19,6 +19,7 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <ImageView
+                android:id="@+id/image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
@@ -29,6 +30,7 @@
                 android:id="@+id/centerToolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
+                android:titleTextColor="@android:color/black"
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                 app:theme="@style/ThemeOverlay.AppCompat.ActionBar" />
@@ -92,11 +94,10 @@
 
             </RelativeLayout>
 
-            <SurfaceView
+            <com.qiao.androidlab.lightreader.SurfaceViews.CoordinateSurfaceView
                 android:id="@+id/centerSurface"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/surface_view_coordinate_show_height" />
-
         </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>
