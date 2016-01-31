@@ -96,7 +96,6 @@ public class ShowActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("光谱");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-        initData();
         initEvent();
         setShowImage();
         manageBitmap();
@@ -140,6 +139,13 @@ public class ShowActivity extends AppCompatActivity {
         dbCtrl = new DBCtrl(this);
         dbUtil = new DBUtil();
         dbUtil.mOPenorCreateDatabase(dbCtrl);
+    }
+
+    /**
+     * 关闭数据库
+     */
+    private void closeDataBase() {
+        dbUtil.closeDatabase(dbCtrl);
     }
 
     private void initView() {
@@ -219,7 +225,9 @@ public class ShowActivity extends AppCompatActivity {
                             Snackbar.make(showRoot, "未知错误", Snackbar.LENGTH_SHORT).show();
                         }
                         Uri picUri = Uri.parse(file.toString());    //将File转化为Uri
+                        initData();     //初始化数据库
                         dbUtil.mDBInsert(lightPic, picUri);  //将这条记录存入数据库
+                        closeDataBase();
                         //Intent intent = new Intent(ShowActivity.this, MainActivity.class);
                         //startActivity(intent);
                         finish();

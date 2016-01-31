@@ -109,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
         dbUtil = new DBUtil();
         dbUtil.mOPenorCreateDatabase(dbCtrl);
         datas = dbUtil.mDBSelect(this); //查询数据
+        dbUtil.closeDatabase(dbCtrl);   //关闭数据库
         adapter.setmDatas(datas);
     }
 
@@ -142,6 +143,7 @@ public class MainActivity extends AppCompatActivity {
                 dbUtil = new DBUtil();
                 dbUtil.mOPenorCreateDatabase(dbCtrl);
                 dbUtil.mDBDelete(position);
+                dbUtil.closeDatabase(dbCtrl);
                 adapter.deleteDate(position);
                 Snackbar.make(recyclerView, "删除成功", Snackbar.LENGTH_SHORT).setAction("OK", new View.OnClickListener() {
                     @Override
@@ -217,6 +219,16 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * 检查相机权限
+     */
+    private void checkCameraPremission() {
+        int checkCameraPermission = ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA);
+        if (checkCameraPermission != PackageManager.PERMISSION_GRANTED) {    //没有权限
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.CAMERA}, 1);    //申请权限
+        }
+    }
+
     class MyThread extends Thread {
 
         @Override
@@ -229,16 +241,6 @@ public class MainActivity extends AppCompatActivity {
             Message message = new Message();
             message.what = 0x123;
             handler.sendMessage(message);
-        }
-    }
-
-    /**
-     * 检查相机权限
-     */
-    private void checkCameraPremission() {
-        int checkCameraPermission = ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA);
-        if (checkCameraPermission != PackageManager.PERMISSION_GRANTED) {    //没有权限
-            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.CAMERA}, 1);    //申请权限
         }
     }
 

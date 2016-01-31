@@ -24,14 +24,14 @@ import java.util.List;
  */
 public class DBUtil {
 
-    private SQLiteDatabase mdb;
     private static final String SQL_INSERT = "INSERT INTO light_info VALUES(null,?,?,?,?,?)";
     private static final String SQL_DETELE = "DELETE FROM light_info WHERE id = ?";
     private static final String SQL_SELECT = "SELECT * FROM light_info";
-    private String[] indexInsert;
-    private String[] indexDelete;
     private static final int SUCCESS = 1;
     private static final int FAIL = 0;
+    private SQLiteDatabase mdb;
+    private String[] indexInsert;
+    private String[] indexDelete;
     private LightPic mLightPic = null;
 
     /**
@@ -46,6 +46,7 @@ public class DBUtil {
 
     /**
      * 向数据库中插入信息
+     *
      * @param lightPic
      * @param picUri
      * @return
@@ -62,7 +63,20 @@ public class DBUtil {
     }
 
     /**
+     * 关闭数据库
+     *
+     * @param dbCtrl
+     */
+    public void closeDatabase(DBCtrl dbCtrl) {
+        dbCtrl.close();
+        if (mdb != null) {
+            mdb.close();
+        }
+    }
+
+    /**
      * 数据库删除某一项
+     *
      * @param id
      * @return
      */
@@ -78,6 +92,7 @@ public class DBUtil {
 
     /**
      * 获取数据库中所有的信息
+     *
      * @param context
      * @return
      * @throws IOException
@@ -95,6 +110,7 @@ public class DBUtil {
             mLightPic.setBm(BitmapFactory.decodeFile(cursor.getString(5)));
             lightList.add(mLightPic);
         }
+        cursor.close();
         return lightList;
     }
 
