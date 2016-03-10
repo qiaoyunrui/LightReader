@@ -22,4 +22,8 @@
     <dimen name="capture_button_elevation">4dp</dimen>
     <dimen name="show_surface_elevation">3dp</dimen>
     <dimen name="appbarlayout_height">300dp</dimen>
+    <dimen name="login_input_size">15sp</dimen>
+    <dimen name="divider_width">1dp</dimen>
+    <dimen name="menu_ic_size">75dp</dimen>
+    <dimen name="menu_text_size">20dp</dimen>
 </resources>

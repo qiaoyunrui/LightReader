@@ -6,4 +6,15 @@
     <string name="card_detail">This is my first project.Thank you.</string>
     <string name="pref_ringtone_silent">Silent</string>
     <string name="mainTitle">首页</string>
+    <string name="username_hint">用户名</string>
+    <string name="password_hint">密码</string>
+    <string name="login_text">登录</string>
+    <string name="newUser">新用户</string>
+    <string name="register">注册</string>
+    <string name="repeat_password">重复密码</string>
+    <string name="username">用户名</string>
+    <string name="find">发现</string>
+    <string name="person">个人</string>
+    <string name="map">地图</string>
+
 </resources>

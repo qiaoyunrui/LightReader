@@ -91,6 +91,7 @@
         android:id="@+id/guillotine_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:clickable="false"
         android:elevation="20dp"
         android:visibility="invisible">
 
@@ -118,55 +119,125 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/primary">
+                android:background="@color/primary"
+                android:clickable="false">
 
                 <LinearLayout
+                    android:id="@+id/menu_linear"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="?android:attr/selectableItemBackground"
-                        android:clickable="true"
-                        android:gravity="center"
-                        android:padding="10dp"
-                        android:text="首页"
-                        android:textSize="25sp" />
 
-                    <TextView
+                    <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="?android:attr/selectableItemBackground"
-                        android:clickable="true"
-                        android:gravity="center"
-                        android:padding="10dp"
-                        android:text="个人"
-                        android:textSize="25sp" />
+                        android:layout_height="@dimen/menu_ic_size">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="?android:attr/selectableItemBackground"
-                        android:clickable="true"
-                        android:gravity="center"
-                        android:padding="10dp"
-                        android:text="发现"
-                        android:textSize="25sp" />
+                        <!--<ImageView
+                            android:layout_width="@dimen/menu_ic_size"
+                            android:layout_height="@dimen/menu_ic_size"
+                            android:layout_alignParentRight="true"
+                            android:layout_margin="@dimen/fab_margin"
+                            android:src="@mipmap/ic_camera_alt_black_48dp" />-->
 
-                    <TextView
+                        <TextView
+                            android:id="@+id/btn_menu_main"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="?android:attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:gravity="center"
+                            android:text="@string/mainTitle"
+                            android:textColor="@color/accent"
+                            android:textSize="@dimen/menu_text_size" />
+
+                    </RelativeLayout>
+
+
+                    <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="?android:attr/selectableItemBackground"
-                        android:clickable="true"
-                        android:gravity="center"
-                        android:padding="10dp"
-                        android:text="设置"
-                        android:textSize="25sp" />
+                        android:layout_height="@dimen/menu_ic_size">
+
+                        <!--<ImageView
+                            android:layout_width="@dimen/menu_ic_size"
+                            android:layout_height="@dimen/menu_ic_size"
+                            android:layout_alignParentRight="true"
+                            android:layout_margin="@dimen/fab_margin"
+                            android:src="@mipmap/ic_camera_black_48dp" />-->
+
+                        <TextView
+                            android:id="@+id/btn_menu_find"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="?android:attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:gravity="center"
+                            android:text="@string/find"
+                            android:textColor="@android:color/black"
+                            android:textSize="@dimen/menu_text_size" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/menu_ic_size">
+
+                        <!--<ImageView
+                            android:layout_width="@dimen/menu_ic_size"
+                            android:layout_height="@dimen/menu_ic_size"
+                            android:layout_alignParentRight="true"
+                            android:layout_margin="@dimen/fab_margin"
+                            android:src="@mipmap/ic_settings_black_48dp" />-->
+
+                        <TextView
+                            android:id="@+id/btn_menu_person"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="?android:attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:gravity="center"
+                            android:text="@string/person"
+                            android:textColor="@android:color/black"
+                            android:textSize="@dimen/menu_text_size" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/menu_ic_size">
+
+                        <!--<ImageView
+                            android:layout_width="@dimen/menu_ic_size"
+                            android:layout_height="@dimen/menu_ic_size"
+                            android:layout_alignParentRight="true"
+                            android:layout_margin="@dimen/fab_margin"
+                            android:src="@mipmap/ic_save_white_48dp" />-->
+
+                        <TextView
+                            android:id="@+id/btn_menu_map"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentRight="true"
+                            android:background="?android:attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:gravity="center"
+                            android:text="@string/map"
+                            android:textColor="@android:color/black"
+                            android:textSize="@dimen/menu_text_size" />
+
+
+                    </RelativeLayout>
 
                 </LinearLayout>
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/menu_linear"
+                    android:clickable="true" />
+
 
             </RelativeLayout>
 
