@@ -3,8 +3,9 @@
     android:id="@+id/card_ex"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:attr/selectableItemBackground"
+    android:layout_margin="@dimen/card_part_margin"
     android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground"
     android:orientation="vertical">
 
     <!--android:background="?android:attr/selectableItemBackground"-->
@@ -24,6 +25,17 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#70000000">
+
+            <TextView
+                android:id="@+id/card_ex_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_margin="@dimen/fab_margin"
+                android:text="2014.2.27"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/card_detail_text_size" />
 
             <TextView
                 android:id="@+id/card_ex_title"
@@ -46,16 +58,6 @@
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/card_detail_text_size" />
 
-            <TextView
-                android:id="@+id/card_ex_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentLeft="true"
-                android:layout_margin="@dimen/fab_margin"
-                android:text="2014.2.27"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/card_detail_text_size" />
 
         </RelativeLayout>
 

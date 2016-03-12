@@ -39,6 +39,8 @@ public class CenterActivity extends AppCompatActivity {
     private ImageView image;
     private SerializableLightPic lightPic;
 
+    private BitmapManage bitmapManage;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,13 +57,19 @@ public class CenterActivity extends AppCompatActivity {
     private void dealData() {
         Intent intent = getIntent();
         lightPic = (SerializableLightPic) intent.getSerializableExtra(KEY);
+        boolean isURL = intent.getBooleanExtra("URL", false);
         if (lightPic != null) {
             title.setText(lightPic.getTitle());
             time.setText(lightPic.getTime());
             author.setText(lightPic.getAuthor());
             detail.setText(lightPic.getDetail());
-            image.setImageBitmap(BitmapFactory.decodeFile(lightPic.getPath()));
-            BitmapManage bitmapManage = new BitmapManage(new Bitmap[]{null, BitmapFactory.decodeFile(lightPic.getPath())});
+            if (isURL) {
+                //从网络上加载图片
+
+            } else {
+                image.setImageBitmap(BitmapFactory.decodeFile(lightPic.getPath()));
+                bitmapManage = new BitmapManage(new Bitmap[]{null, BitmapFactory.decodeFile(lightPic.getPath())});
+            }
             List<Integer> pixelsList = bitmapManage.manage();
             coordinateView.setPixelsList(pixelsList);
         }

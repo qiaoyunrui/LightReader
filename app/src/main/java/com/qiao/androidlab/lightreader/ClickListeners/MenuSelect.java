@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.androidlab.qiao.guillotineview.animtor.GuillotineAnimtor;
 import com.qiao.androidlab.lightreader.Activities.MainActivity;
 import com.qiao.androidlab.lightreader.Fragment.BaseFragment;
+import com.qiao.androidlab.lightreader.Fragment.FindFragment;
 import com.qiao.androidlab.lightreader.Fragment.LoginFragment;
 import com.qiao.androidlab.lightreader.Fragment.PersonFragment;
 import com.qiao.androidlab.lightreader.R;
@@ -65,6 +66,7 @@ public class MenuSelect {
                 case R.id.btn_menu_map:
                     break;
                 case R.id.btn_menu_find:
+                    openFragment(new FindFragment());
                     break;
             }
 
@@ -86,7 +88,7 @@ public class MenuSelect {
      */
     public boolean checkLoginState() {
         SharedPreferences sharedPreferences = mContext.getSharedPreferences(LOGIN_STATE, Context.MODE_PRIVATE);
-        return sharedPreferences.getBoolean(LOGIN_STATE, true);
+        return sharedPreferences.getBoolean(LOGIN_STATE, false);
     }
 
     /**
