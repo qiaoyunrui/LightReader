@@ -12,11 +12,12 @@
         android:layout_height="match_parent"
         android:visibility="visible">
 
-
+        <!--toolbar-->
         <android.support.design.widget.AppBarLayout
             android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:elevation="10dp">
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/main_toolbar"
@@ -37,6 +38,7 @@
                     android:src="@mipmap/ic_menu_black_48dp_90" />
 
                 <TextView
+                    android:id="@+id/toolbarTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -46,6 +48,7 @@
 
         </android.support.design.widget.AppBarLayout>
 
+        <!--列表-->
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/swipeRefreshLayout"
             android:layout_width="match_parent"
@@ -59,7 +62,7 @@
 
         </android.support.v4.widget.SwipeRefreshLayout>
 
-
+        <!--进度条-->
         <ProgressBar
             android:id="@+id/progressBar"
             style="@android:style/Widget.Holo.ProgressBar"
@@ -67,18 +70,34 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true" />
 
+        <!--显示fragment-->
+        <FrameLayout
+            android:id="@+id/fragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/appBarLayout"
+            android:clickable="true"
+            android:elevation="6dp"
+            android:visibility="invisible"></FrameLayout>
+
+        <!--FAB-->
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="bottom|right"
+            android:layout_margin="@dimen/fab_margin"
+            android:clickable="true"
+            android:elevation="5dp"
+            android:src="@mipmap/ic_add_white_48dp"
+            app:rippleColor="@color/colorControlHighlight" />
+
     </RelativeLayout>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
-        android:layout_margin="@dimen/fab_margin"
-        android:clickable="true"
-        android:src="@mipmap/ic_add_white_48dp"
-        app:rippleColor="@color/colorControlHighlight" />
 
+    <!--显示过渡动画View-->
     <View
         android:id="@+id/reveal_view"
         android:layout_width="match_parent"
@@ -87,12 +106,13 @@
         android:elevation="@dimen/reveal_view_elevation"
         android:visibility="invisible" />
 
+    <!--显示铡刀菜单-->
     <FrameLayout
         android:id="@+id/guillotine_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clickable="false"
-        android:elevation="20dp"
+        android:elevation="15dp"
         android:visibility="invisible">
 
         <LinearLayout
@@ -116,11 +136,13 @@
 
             </android.support.v7.widget.Toolbar>
 
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/primary"
                 android:clickable="false">
+
 
                 <LinearLayout
                     android:id="@+id/menu_linear"
@@ -132,7 +154,8 @@
 
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/menu_ic_size">
+                        android:layout_height="@dimen/menu_ic_size"
+                        android:clickable="false">
 
                         <!--<ImageView
                             android:layout_width="@dimen/menu_ic_size"
@@ -146,7 +169,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="?android:attr/selectableItemBackground"
-                            android:clickable="true"
                             android:gravity="center"
                             android:text="@string/mainTitle"
                             android:textColor="@color/accent"
@@ -245,5 +267,6 @@
 
 
     </FrameLayout>
+
 
 </android.support.design.widget.CoordinatorLayout><!---->

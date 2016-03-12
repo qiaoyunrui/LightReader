@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     android:orientation="vertical"
     android:padding="@dimen/fab_margin">
 
@@ -48,7 +49,7 @@
     </android.support.design.widget.TextInputLayout>
 
     <Button
-        android:id="@+id/btn_login"
+        android:id="@+id/register_register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/accent"

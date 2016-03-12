@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/view1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/person_v_height"
+        android:background="@color/primary"
+        android:elevation="3dp" />
+
+    <ImageView
+        android:layout_width="@dimen/menu_ic_size"
+        android:layout_height="@dimen/menu_ic_size"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/person_iv_margin"
+        android:elevation="3dp"
+        android:src="@mipmap/ic_camera_alt_black_48dp" />
+
+    <TextView
+        android:id="@+id/person_tv_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/view1"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/fab_margin"
+        android:background="@drawable/menu_button_style"
+        android:padding="@dimen/fab_margin"
+        android:text="居合子"
+        android:textColor="@color/accent"
+        android:textSize="@dimen/card_title_text_size" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/person_v_height"
+        android:layout_below="@id/person_tv_username">
+
+        <TextView
+            android:id="@+id/tv1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="@dimen/fab_margin"
+            android:text="上传的图片"
+            android:textSize="@dimen/card_detail_text_size" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv1"
+            android:gravity="center"
+            android:text="20"
+            android:textColor="@android:color/black"
+            android:textSize="50dp" />
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/person_btn_logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="@dimen/fab_margin"
+        android:background="@color/accent"
+        android:text="退出登录"
+        android:textColor="@android:color/black" />
+
+
+</RelativeLayout>

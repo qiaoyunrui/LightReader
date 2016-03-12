@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     android:orientation="vertical"
     android:padding="@dimen/fab_margin">
 
@@ -48,13 +49,16 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/btn_register"
+            android:layout_width="@dimen/Login_register_btn_width"
+            android:layout_height="@dimen/Login_register_btn_height"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
+            android:background="?android:attr/selectableItemBackground"
+            android:gravity="center"
             android:text="@string/newUser"
             android:textColor="@color/primary"
-            android:textSize="@dimen/login_input_size"/>
+            android:textSize="@dimen/login_register_btn_size" />
 
     </RelativeLayout>
 

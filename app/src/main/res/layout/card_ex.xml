@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/card_ex"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?android:attr/selectableItemBackground"
+    android:clickable="true"
+    android:orientation="vertical">
+
+    <!--android:background="?android:attr/selectableItemBackground"-->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/card_ex_view_height">
+
+        <ImageView
+            android:id="@+id/card_ex_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/test_img" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#70000000">
+
+            <TextView
+                android:id="@+id/card_ex_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/card_ex_time"
+                android:layout_margin="@dimen/fab_margin"
+                android:text="我所有的向往"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/card_title_text_size" />
+
+            <TextView
+                android:id="@+id/card_ex_author"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_margin="@dimen/fab_margin"
+                android:text="居合子"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/card_detail_text_size" />
+
+            <TextView
+                android:id="@+id/card_ex_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_margin="@dimen/fab_margin"
+                android:text="2014.2.27"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/card_detail_text_size" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

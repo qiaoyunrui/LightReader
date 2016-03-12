@@ -27,8 +27,10 @@ import android.view.ViewAnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.androidlab.qiao.guillotineview.animtor.GuillotineAnimtor;
+import com.qiao.androidlab.lightreader.ClickListeners.MenuSelect;
 import com.qiao.androidlab.lightreader.Parts.LightPic;
 import com.qiao.androidlab.lightreader.Parts.MyAdapter;
 import com.qiao.androidlab.lightreader.Parts.SerializableLightPic;
@@ -53,13 +55,19 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton openButton;
     private ImageButton closeButton;
     private FrameLayout guillotineView;
+    private TextView menuMain;
+    private TextView menuPerson;
+    private TextView menuFind;
+    private TextView menuMap;
 
+    private MenuSelect mMenuSelect;
     private List<LightPic> datas;
     private MyAdapter adapter;
     private Intent intent;
     private DBCtrl dbCtrl;
     private DBUtil dbUtil;
     private Handler handler;
+    private GuillotineAnimtor mGuillotineAnimtor;
 
 
     @Override
@@ -71,12 +79,14 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setTitle(null);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
-        setHuillotine();
+        setGuillotine();
+        mMenuSelect = new MenuSelect(this, this, mGuillotineAnimtor);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         adapter = new MyAdapter(this, new ArrayList<LightPic>());
         recyclerView.setAdapter(adapter);
+        checkCameraPremission();
         handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
@@ -95,8 +105,8 @@ public class MainActivity extends AppCompatActivity {
     /**
      * 设置铡刀菜单
      */
-    private void setHuillotine() {
-        new GuillotineAnimtor.Builder()
+    private void setGuillotine() {
+        mGuillotineAnimtor = new GuillotineAnimtor.Builder()
                 .setActionbar(toolbar)
                 .setCloseButton(closeButton)
                 .setOpenButton(openButton)
@@ -127,6 +137,10 @@ public class MainActivity extends AppCompatActivity {
         openButton = (ImageButton) findViewById(R.id.hamburger);
         closeButton = (ImageButton) findViewById(R.id.guillotine_hamburger);
         guillotineView = (FrameLayout) findViewById(R.id.guillotine_view);
+        menuMain = (TextView) findViewById(R.id.btn_menu_main);
+        menuFind = (TextView) findViewById(R.id.btn_menu_find);
+        menuPerson = (TextView) findViewById(R.id.btn_menu_person);
+        menuMap = (TextView) findViewById(R.id.btn_menu_map);
     }
 
     private void initEvent() {
@@ -167,7 +181,6 @@ public class MainActivity extends AppCompatActivity {
             @TargetApi(Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View v) {
-                checkCameraPremission();
                 if (Build.VERSION.SDK_INT >= 21) {
                     intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     int[] location = new int[2];
@@ -201,6 +214,34 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        menuFind.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mMenuSelect.handle(v.getId());
+                setFabVisiable(false);
+            }
+        });
+        menuMain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mMenuSelect.handle(v.getId());
+                setFabVisiable(true);
+            }
+        });
+        menuPerson.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mMenuSelect.handle(v.getId());
+                setFabVisiable(false);
+            }
+        });
+        menuMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mMenuSelect.handle(v.getId());
+                setFabVisiable(false);
+            }
+        });
     }
 
     @Override
@@ -236,6 +277,14 @@ public class MainActivity extends AppCompatActivity {
         int checkCameraPermission = ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA);
         if (checkCameraPermission != PackageManager.PERMISSION_GRANTED) {    //没有权限
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.CAMERA}, 1);    //申请权限
+        }
+    }
+
+    public void setFabVisiable(boolean isVisiable) {
+        if (isVisiable) {
+            fab.setVisibility(View.VISIBLE);
+        } else {
+            fab.setVisibility(View.INVISIBLE);
         }
     }
 

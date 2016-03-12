@@ -26,4 +26,10 @@
     <dimen name="divider_width">1dp</dimen>
     <dimen name="menu_ic_size">75dp</dimen>
     <dimen name="menu_text_size">20dp</dimen>
+    <dimen name="login_register_btn_size">20sp</dimen>
+    <dimen name="Login_register_btn_height">50dp</dimen>
+    <dimen name="Login_register_btn_width">100dp</dimen>
+    <dimen name="person_iv_margin">30dp</dimen>
+    <dimen name="person_v_height">150dp</dimen>
+    <dimen name="card_ex_view_height">200dp</dimen>
 </resources>
