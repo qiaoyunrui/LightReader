@@ -6,60 +6,75 @@
     android:orientation="vertical"
     android:padding="@dimen/fab_margin">
 
-    <!-- 这里需要添加一个APP图标-->
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/username"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        `       <!-- 这里需要添加一个APP图标-->
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <EditText
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/username_hint"
+                android:inputType="text"
+                android:textSize="@dimen/login_input_size" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/password_hint"
+                android:inputType="textPassword"
+                android:textSize="@dimen/login_input_size" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/btn_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/username_hint"
-            android:inputType="text"
-            android:textSize="@dimen/login_input_size" />
+            android:background="@color/accent"
+            android:clickable="false"
+            android:text="@string/login_text"
+            android:textSize="@dimen/login_input_size"/>
 
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <EditText
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/password_hint"
-            android:inputType="textPassword"
-            android:textSize="@dimen/login_input_size" />
+            android:layout_height="match_parent">
 
-    </android.support.design.widget.TextInputLayout>
+            <TextView
+                android:id="@+id/btn_register"
+                android:layout_width="@dimen/Login_register_btn_width"
+                android:layout_height="@dimen/Login_register_btn_height"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:background="?android:attr/selectableItemBackground"
+                android:gravity="center"
+                android:text="@string/newUser"
+                android:textColor="@color/primary"
+                android:textSize="@dimen/login_register_btn_size" />
 
-    <Button
-        android:id="@+id/btn_login"
-        android:layout_width="match_parent"
+        </RelativeLayout>
+    </LinearLayout>
+
+
+    <ProgressBar
+        android:id="@+id/login_progressBar"
+        style="@android:style/Widget.Holo.ProgressBar"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/accent"
-        android:text="@string/login_text"
-        android:textSize="@dimen/login_input_size" />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <TextView
-            android:id="@+id/btn_register"
-            android:layout_width="@dimen/Login_register_btn_width"
-            android:layout_height="@dimen/Login_register_btn_height"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:background="?android:attr/selectableItemBackground"
-            android:gravity="center"
-            android:text="@string/newUser"
-            android:textColor="@color/primary"
-            android:textSize="@dimen/login_register_btn_size" />
-
-    </RelativeLayout>
+        android:layout_centerInParent="true"
+        android:visibility="invisible" />
 
 </LinearLayout>

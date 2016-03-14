@@ -49,6 +49,7 @@
             android:textSize="@dimen/card_detail_text_size" />
 
         <TextView
+            android:id="@+id/person_count"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv1"
@@ -69,5 +70,13 @@
         android:text="退出登录"
         android:textColor="@android:color/black" />
 
+    <ProgressBar
+        android:id="@+id/person_progressBar"
+        style="@android:style/Widget.Holo.ProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:elevation="5dp"
+        android:visibility="invisible" />
 
 </RelativeLayout>

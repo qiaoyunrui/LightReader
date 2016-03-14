@@ -31,7 +31,7 @@ public class MenuSelect {
 
     private static final String TAG = "MenuSelect";
     private static final String LOGIN_STATE = "loginState"; //登录的标识符
-    private static final String SHARED_PREFERENCE_SIGN = "com.juhezi.com"; //登录的标识符
+    private static final String SHARED_PREFERENCE_SIGN = "com.juhezi.com";
     private Intent mIntent;
 
     private Context mContext;
@@ -87,8 +87,9 @@ public class MenuSelect {
      * @return
      */
     public boolean checkLoginState() {
-        SharedPreferences sharedPreferences = mContext.getSharedPreferences(LOGIN_STATE, Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = mContext.getSharedPreferences(SHARED_PREFERENCE_SIGN, Context.MODE_PRIVATE);
         return sharedPreferences.getBoolean(LOGIN_STATE, false);
+//        return false;
     }
 
     /**
