@@ -29,4 +29,5 @@ dependencies {
     compile 'com.android.support:design:23.1.1'
     compile 'com.github.qiaoyunrui:Qiao_Widget:1.2'
     compile 'com.mcxiaoke.volley:library:1.0.6'
+    compile 'com.github.bumptech.glide:glide:3.6.1'
 }

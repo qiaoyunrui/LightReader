@@ -1,6 +1,8 @@
 package com.qiao.androidlab.lightreader.Parts;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +14,9 @@ import android.widget.TextView;
 
 import com.qiao.androidlab.lightreader.R;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.lang.ref.WeakReference;
 import java.util.List;
 
 /**
@@ -26,6 +31,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
     public MyAdapter(Context context, List<LightPic> datas) {
         this.mContext = context;
         this.mDatas = datas;
+//        WeakReference<List<LightPic>> weakReference = new WeakReference<>(datas);
         mInflater = LayoutInflater.from(context);
     }
 
@@ -59,6 +65,18 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
             holder.detail.setText(mDatas.get(position).getDetail());
         }
         if (!isNull(mDatas.get(position).getBm())) {
+            /*
+            进行图片压缩
+             */
+            /*ByteArrayOutputStream out = new ByteArrayOutputStream();
+            mDatas.get(position).getBm().compress(Bitmap.CompressFormat.JPEG, 100, out);
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            int be = 2;
+            options.inSampleSize = be;
+            ByteArrayInputStream in = new ByteArrayInputStream(out.toByteArray());
+            Bitmap bitmap = BitmapFactory.decodeStream(in, null, null);
+            WeakReference<Bitmap> weakReference = new WeakReference<Bitmap>(bitmap);
+            holder.show.setImageBitmap(bitmap);*/
             holder.show.setImageBitmap(mDatas.get(position).getBm());
         }
 

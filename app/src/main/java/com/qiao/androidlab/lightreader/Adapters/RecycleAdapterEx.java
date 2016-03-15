@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.qiao.androidlab.lightreader.Parts.MyAdapter;
 import com.qiao.androidlab.lightreader.Parts.SerializableLightPic;
 import com.qiao.androidlab.lightreader.R;
@@ -61,13 +62,21 @@ public class RecycleAdapterEx extends RecyclerView.Adapter<RecycleAdapterEx.View
         holder.title.setText(datas.get(position).getTitle());
         holder.author.setText(datas.get(position).getAuthor());
         holder.time.setText(datas.get(position).getTime());
-        mBitmap = BitmapFactory.decodeFile(datas.get(position).getPath());
+//        mBitmap = BitmapFactory.decodeFile(datas.get(position).getPath());
+        /*
+        图片加载框架
+         */
+        Glide.with(mContext)
+                .load(datas.get(position).getPath())
+                        //.placeholder(R.mipmap.test_img)   //设置占位图
+                .crossFade()
+                .into(holder.show);
         WeakReference<Bitmap> weakReference = new WeakReference<Bitmap>(mBitmap);
-        if (mBitmap == null) {
+        /*if (mBitmap == null) {
 
         } else {
             holder.show.setImageBitmap(mBitmap);
-        }
+        }*/
         if (mOnItemClickListener != null) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

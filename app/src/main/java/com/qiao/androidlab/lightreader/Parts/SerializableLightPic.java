@@ -16,8 +16,6 @@ public class SerializableLightPic implements Serializable {
     private String time = "2015.11.27";
     private int id = 1;     //在数据库中的id
     private int serverId = 1;   //在服务器中的id
-
-
     private String path;    //图片路径
     private int lon = 0;    //经度
     private int lat = 0;    //纬度
@@ -41,24 +39,48 @@ public class SerializableLightPic implements Serializable {
         return title;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public String getAuthor() {
         return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     public String getDetail() {
         return detail;
     }
 
+    public void setDetail(String detail) {
+        this.detail = detail;
+    }
+
     public String getTime() {
         return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 
     public int getId() {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getPath() {
         return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 
     public int getLon() {

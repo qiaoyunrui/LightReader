@@ -10,10 +10,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.qiao.androidlab.lightreader.Parts.LightPic;
 import com.qiao.androidlab.lightreader.Parts.SerializableLightPic;
 import com.qiao.androidlab.lightreader.R;
@@ -21,6 +26,7 @@ import com.qiao.androidlab.lightreader.ReadUtil.BitmapManage;
 import com.qiao.androidlab.lightreader.SurfaceViews.CoordinateSurfaceView;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Administrator on 2015/12/2.
@@ -28,7 +34,7 @@ import java.util.List;
 public class CenterActivity extends AppCompatActivity {
 
     private static final String KEY = "LIGHT_PIC";
-
+    Bitmap bitmap;
     private Toolbar toolbar;
     private TextView title;
     private TextView author;
@@ -38,9 +44,7 @@ public class CenterActivity extends AppCompatActivity {
     private CoordinateSurfaceView coordinateView;
     private ImageView image;
     private SerializableLightPic lightPic;
-
     private BitmapManage bitmapManage;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,13 +69,24 @@ public class CenterActivity extends AppCompatActivity {
             detail.setText(lightPic.getDetail());
             if (isURL) {
                 //从网络上加载图片
-
+                fab.setVisibility(View.INVISIBLE);  //设置上传按钮不可见
+                Glide.with(this).load(lightPic.getPath()).asBitmap().into(new SimpleTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                        bitmap = resource;
+                        image.setImageBitmap(bitmap);
+                        bitmapManage = new BitmapManage(new Bitmap[]{null, bitmap});
+                        List<Integer> pixelsList = bitmapManage.manage();
+                        coordinateView.setPixelsList(pixelsList);
+                    }
+                });
             } else {
                 image.setImageBitmap(BitmapFactory.decodeFile(lightPic.getPath()));
                 bitmapManage = new BitmapManage(new Bitmap[]{null, BitmapFactory.decodeFile(lightPic.getPath())});
+                List<Integer> pixelsList = bitmapManage.manage();
+                coordinateView.setPixelsList(pixelsList);
             }
-            List<Integer> pixelsList = bitmapManage.manage();
-            coordinateView.setPixelsList(pixelsList);
+
         }
 
     }

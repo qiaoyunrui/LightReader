@@ -1,6 +1,7 @@
 package com.qiao.androidlab.lightreader.Parts;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 import java.io.Serializable;
 

@@ -39,6 +39,7 @@ import com.qiao.androidlab.lightreader.db.DBCtrl;
 import com.qiao.androidlab.lightreader.db.DBUtil;
 
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -123,6 +124,7 @@ public class MainActivity extends AppCompatActivity {
         dbUtil = new DBUtil();
         dbUtil.mOPenorCreateDatabase(dbCtrl);
         datas = dbUtil.mDBSelect(this); //查询数据
+        WeakReference<List<LightPic>> weakReference = new WeakReference<List<LightPic>>(datas);
         dbUtil.closeDatabase(dbCtrl);   //关闭数据库
         adapter.setmDatas(datas);
     }
@@ -208,7 +210,7 @@ public class MainActivity extends AppCompatActivity {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-//                adapter.notifyDataSetChanged();     //刷新列表
+       //         adapter.notifyDataSetChanged();     //刷新列表
                 new MyThread().start();   //开始线程
                 swipeRefreshLayout.setRefreshing(false);
             }
