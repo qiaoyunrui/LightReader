@@ -47,7 +47,7 @@
             android:background="@color/accent"
             android:clickable="false"
             android:text="@string/login_text"
-            android:textSize="@dimen/login_input_size"/>
+            android:textSize="@dimen/login_input_size" />
 
         <RelativeLayout
             android:layout_width="match_parent"
