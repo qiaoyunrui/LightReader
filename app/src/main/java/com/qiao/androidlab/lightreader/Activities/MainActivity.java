@@ -28,6 +28,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.androidlab.qiao.guillotineview.animtor.GuillotineAnimtor;
 import com.qiao.androidlab.lightreader.ClickListeners.MenuSelect;
@@ -46,6 +47,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private static final String KEY = "LIGHT_PIC";
+    private static final String TAG = "MainActivity";
 
     private Toolbar toolbar;
     private android.support.v7.widget.RecyclerView recyclerView;
@@ -62,12 +64,24 @@ public class MainActivity extends AppCompatActivity {
     private TextView menuMap;
 
     private MenuSelect mMenuSelect;
-    private List<LightPic> datas;
+    private List<LightPic> datas = new ArrayList<>();
     private MyAdapter adapter;
     private Intent intent;
     private DBCtrl dbCtrl;
     private DBUtil dbUtil;
-    private Handler handler;
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == 0x123) { //数据加载完毕
+                progressBar.setVisibility(View.INVISIBLE);
+                adapter.notifyDataSetChanged();
+            }
+            if (msg.what == 0x129) {
+                adapter.notifyDataSetChanged();     //更新数据
+                swipeRefreshLayout.setRefreshing(false);    //隐藏进度条
+            }
+        }
+    };
     private GuillotineAnimtor mGuillotineAnimtor;
 
 
@@ -88,15 +102,6 @@ public class MainActivity extends AppCompatActivity {
         adapter = new MyAdapter(this, new ArrayList<LightPic>());
         recyclerView.setAdapter(adapter);
         checkCameraPremission();
-        handler = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                if (msg.what == 0x123) { //数据加载完毕
-                    progressBar.setVisibility(View.INVISIBLE);
-                    adapter.notifyDataSetChanged();
-                }
-            }
-        };
         progressBar.setVisibility(View.VISIBLE);    //显示进度条
         new MyThread().start();   //开始线程
         initEvent();
@@ -123,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
         dbCtrl = new DBCtrl(this);  //数据库已经创建
         dbUtil = new DBUtil();
         dbUtil.mOPenorCreateDatabase(dbCtrl);
-        datas = dbUtil.mDBSelect(this); //查询数据
+        dbUtil.mDBSelect(this, datas); //查询数据
         WeakReference<List<LightPic>> weakReference = new WeakReference<List<LightPic>>(datas);
         dbUtil.closeDatabase(dbCtrl);   //关闭数据库
         adapter.setmDatas(datas);
@@ -210,9 +215,9 @@ public class MainActivity extends AppCompatActivity {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-       //         adapter.notifyDataSetChanged();     //刷新列表
-                new MyThread().start();   //开始线程
-                swipeRefreshLayout.setRefreshing(false);
+                //         adapter.notifyDataSetChanged();     //刷新列表
+                //new MyThread().start();   //开始线程
+                update();
             }
         });
 
@@ -303,6 +308,32 @@ public class MainActivity extends AppCompatActivity {
             message.what = 0x123;
             handler.sendMessage(message);
         }
+    }
+
+    /**
+     * 更新数据从服务器重新获取数据
+     */
+    private void update() {
+        new Thread() {
+            @Override
+            public void run() {
+                dbCtrl = new DBCtrl(MainActivity.this);  //数据库已经创建
+                dbUtil = new DBUtil();
+                dbUtil.mOPenorCreateDatabase(dbCtrl);   //打开数据库
+                datas.clear();  //清除原来的数据
+                try {
+                    dbUtil.mDBSelect(MainActivity.this, datas); //查询数据
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Log.i(TAG, "出现异常");
+                } finally {
+                    dbUtil.closeDatabase(dbCtrl);   //关闭数据库
+//                    Toast.makeText(MainActivity.this, "出现异常", Toast.LENGTH_SHORT);
+                }
+                handler.sendEmptyMessage(0x129);
+            }
+//
+        }.start();
     }
 
 }

@@ -97,22 +97,23 @@ public class DBUtil {
      * @return
      * @throws IOException
      */
-    public List<LightPic> mDBSelect(Context context) throws IOException {
-        List<LightPic> lightList = new ArrayList<>();
-        Cursor cursor = mdb.rawQuery(SQL_SELECT, null);
-        while (cursor.moveToNext()) {
-            mLightPic = new LightPic();
-            mLightPic.setId(cursor.getInt(0));
-            mLightPic.setTitle(cursor.getString(1));
-            mLightPic.setAuthor(cursor.getString(2));
-            mLightPic.setTime(cursor.getString(3));
-            mLightPic.setDetail(cursor.getString(4));
-            mLightPic.setBm(BitmapFactory.decodeFile(cursor.getString(5)));
-            mLightPic.setPath(cursor.getString(5));
-            lightList.add(mLightPic);
+    public void mDBSelect(Context context, List<LightPic> data) throws IOException {
+        //List<LightPic> lightList = new ArrayList<>();
+        if (data != null) {
+            Cursor cursor = mdb.rawQuery(SQL_SELECT, null);
+            while (cursor.moveToNext()) {
+                mLightPic = new LightPic();
+                mLightPic.setId(cursor.getInt(0));
+                mLightPic.setTitle(cursor.getString(1));
+                mLightPic.setAuthor(cursor.getString(2));
+                mLightPic.setTime(cursor.getString(3));
+                mLightPic.setDetail(cursor.getString(4));
+                mLightPic.setBm(BitmapFactory.decodeFile(cursor.getString(5)));
+                mLightPic.setPath(cursor.getString(5));
+                data.add(mLightPic);
+            }
+            cursor.close();
         }
-        cursor.close();
-        return lightList;
     }
 
 }

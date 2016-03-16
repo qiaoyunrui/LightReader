@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.qiao.androidlab.lightreader.R;
 
 import java.io.ByteArrayInputStream;
@@ -78,6 +79,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
             WeakReference<Bitmap> weakReference = new WeakReference<Bitmap>(bitmap);
             holder.show.setImageBitmap(bitmap);*/
             holder.show.setImageBitmap(mDatas.get(position).getBm());
+            Glide.with(mContext)
+                    .load(mDatas.get(position).getPath())
+                    .crossFade()
+                    .into(holder.show);
         }
 
         holder.title.setText(mDatas.get(position).getTitle());
