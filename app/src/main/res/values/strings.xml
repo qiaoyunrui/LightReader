@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">LightReader</string>
     <string name="card_title_text">Title</string>
     <string name="card_author_text">Author</string>
     <string name="card_time_text">2015.11.27</string>
@@ -16,5 +15,6 @@
     <string name="find">发现</string>
     <string name="person">个人</string>
     <string name="map">地图</string>
+    <string name="app_name">光谱</string>
 
 </resources>
