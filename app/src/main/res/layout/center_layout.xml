@@ -112,4 +112,12 @@
         android:src="@mipmap/ic_cloud_upload_white_48dp"
         app:rippleColor="@color/colorControlHighlight" />
 
+    <ProgressBar
+        android:id="@+id/center_progressBar"
+        style="@android:style/Widget.Holo.ProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="invisible" />
+
 </android.support.design.widget.CoordinatorLayout>
