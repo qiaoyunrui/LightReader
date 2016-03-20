@@ -17,8 +17,8 @@ public class SerializableLightPic implements Serializable {
     private int id = 1;     //在数据库中的id
     private int serverId = 1;   //在服务器中的id
     private String path;    //图片路径
-    private int lon = 0;    //经度
-    private int lat = 0;    //纬度
+    private double lon = 0;    //经度
+    private double lat = 0;    //纬度
 
     public SerializableLightPic() {
 
@@ -83,19 +83,19 @@ public class SerializableLightPic implements Serializable {
         this.path = path;
     }
 
-    public int getLon() {
+    public double getLon() {
         return lon;
     }
 
-    public void setLon(int lon) {
+    public void setLon(double lon) {
         this.lon = lon;
     }
 
-    public int getLat() {
+    public double getLat() {
         return lat;
     }
 
-    public void setLat(int lat) {
+    public void setLat(double lat) {
         this.lat = lat;
     }
 

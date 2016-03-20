@@ -16,6 +16,7 @@ import com.qiao.androidlab.lightreader.Activities.MainActivity;
 import com.qiao.androidlab.lightreader.Fragment.BaseFragment;
 import com.qiao.androidlab.lightreader.Fragment.FindFragment;
 import com.qiao.androidlab.lightreader.Fragment.LoginFragment;
+import com.qiao.androidlab.lightreader.Fragment.MapFragment;
 import com.qiao.androidlab.lightreader.Fragment.PersonFragment;
 import com.qiao.androidlab.lightreader.R;
 
@@ -63,10 +64,11 @@ public class MenuSelect {
                 case R.id.btn_menu_person:
                     openFragment(new PersonFragment());
                     break;
-                case R.id.btn_menu_map:
-                    break;
                 case R.id.btn_menu_find:
                     openFragment(new FindFragment());
+                    break;
+                case R.id.btn_menu_map:
+                    openFragment(new MapFragment());
                     break;
             }
 

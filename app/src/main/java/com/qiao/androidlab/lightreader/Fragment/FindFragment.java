@@ -176,8 +176,8 @@ public class FindFragment extends BaseFragment {
             serializableLightPic.setTime(jsonObject.getJSONArray("data").getJSONObject(index).get("time").toString());
             serializableLightPic.setDetail(jsonObject.getJSONArray("data").getJSONObject(index).get("detail").toString());
             serializableLightPic.setPath(jsonObject.getJSONArray("data").getJSONObject(index).get("url").toString());
-            serializableLightPic.setLon(Integer.parseInt(jsonObject.getJSONArray("data").getJSONObject(index).get("lon").toString()));
-            serializableLightPic.setLat(Integer.parseInt(jsonObject.getJSONArray("data").getJSONObject(index).get("lat").toString()));
+            serializableLightPic.setLon(Double.parseDouble(jsonObject.getJSONArray("data").getJSONObject(index).get("lon").toString()));
+            serializableLightPic.setLat(Double.parseDouble(jsonObject.getJSONArray("data").getJSONObject(index).get("lat").toString()));
             serializableLightPic.setAuthor(jsonObject.getJSONArray("data").getJSONObject(index).get("(SELECT username FROM users WHERE users.uid = storage.uid)").toString());
         } catch (JSONException e) {
             e.printStackTrace();

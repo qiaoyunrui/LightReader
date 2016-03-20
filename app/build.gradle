@@ -30,4 +30,5 @@ dependencies {
     compile 'com.github.qiaoyunrui:Qiao_Widget:1.2'
     compile 'com.mcxiaoke.volley:library:1.0.6'
     compile 'com.github.bumptech.glide:glide:3.6.1'
+    compile files('libs/AMap_2DMap_V2.8.1_20160202.jar')
 }
