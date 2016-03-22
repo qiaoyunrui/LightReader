@@ -26,7 +26,7 @@ import java.util.List;
  * RecycleView 的 适配器【新】
  *
  * @author: 乔云瑞
- * @time: 2016/3/12 18:02
+ * @time: 2016/3/12 18:medium
  */
 public class RecycleAdapterEx extends RecyclerView.Adapter<RecycleAdapterEx.ViewHolderEx> {
 

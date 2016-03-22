@@ -62,7 +62,7 @@ public class MapFragment extends BaseFragment {
                 aMap.moveCamera(CameraUpdateFactory.zoomTo(17));
                 aMap.invalidate();
                 for (int i = 0; i < datas.size(); i++) {
-                    draw(datas.get(i).getLatLng());
+                    draw(datas.get(i).getLatLng(), datas.get(i).getState());
                 }
             }
         }
@@ -169,9 +169,21 @@ public class MapFragment extends BaseFragment {
         groundOverlayOptions.position(BEIJING, getSize(zoom));
         aMap.addGroundOverlay(groundOverlayOptions);
     }*/
-    private void draw(LatLng latLng) {
+    private void draw(LatLng latLng, int state) {
         GroundOverlayOptions groundOverlayOptions = new GroundOverlayOptions();
-        groundOverlayOptions.image(BitmapDescriptorFactory.fromResource(R.mipmap.ic_camera_alt_black_48dp));
+        int id = R.mipmap.normal;
+        switch (state) {
+            case MapPoint.STATE_NORMAL:
+                id = R.mipmap.normal;
+                break;
+            case MapPoint.STATE_MEDIUM:
+                id = R.mipmap.medium;
+                break;
+            case MapPoint.STATE_SERIOUS:
+                id = R.mipmap.serious;
+                break;
+        }
+        groundOverlayOptions.image(BitmapDescriptorFactory.fromResource(id));
         groundOverlayOptions.position(latLng, 100);
         aMap.addGroundOverlay(groundOverlayOptions);
     }

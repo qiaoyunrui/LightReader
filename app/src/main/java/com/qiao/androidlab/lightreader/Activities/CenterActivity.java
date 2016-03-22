@@ -201,6 +201,7 @@ public class CenterActivity extends AppCompatActivity {
             public void run() {
                 try {
                     result = UploadUtil.upload(new URL(URL), new File(path));
+                    Log.i(TAG, result);
                     result = HttpUtil.getJsonString(result);
                     LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
                     /*if (ActivityCompat.checkSelfPermission(CenterActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
@@ -217,8 +218,8 @@ public class CenterActivity extends AppCompatActivity {
                     Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
                     lon = location.getLongitude();
                     lat = location.getLatitude();
-                    Log.i(TAG,"lon is " + lon);
-                    Log.i(TAG,"lat is " + lat);
+                    //Log.i(TAG, "lon is " + lon);
+                    //Log.i(TAG, "lat is " + lat);
                     SharedPreferences sharedPreferences =
                             CenterActivity.this.getSharedPreferences(SHARED_PREFERENCE_SIGN, Context.MODE_PRIVATE);
                     int uid = sharedPreferences.getInt(USER_ID, 0);

@@ -12,15 +12,11 @@ import com.amap.api.maps2d.model.LatLng;
  */
 public class MapPoint {
 
-    public static final int STATE_NORMAL = -1;
-    public static final int STATE_SLIGHT = 1;   //轻微
-    public static final int STATE_MEDIUM = 2;   //中等
-    public static final int STATE_SERIOUS = 3;  //严重
+    public static final int STATE_NORMAL = 0;   //轻微
+    public static final int STATE_MEDIUM = 1;   //中等
+    public static final int STATE_SERIOUS = 2;  //严重
 
-    public static final int STATE_POLLUTE = 0;  //污染
-
-
-    private int state;   //状态
+    private int state = STATE_MEDIUM;   //状态
     private LatLng latLng;  //坐标点
 
     public LatLng getLatLng() {
