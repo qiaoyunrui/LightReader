@@ -46,6 +46,7 @@ public class MapFragment extends BaseFragment {
 
     private static final String URL = "http://juhezi.applinzi.com/function/queryAll.php";
     private static final String TAG = "MapFragment";
+    private final static LatLng BEIJING = new LatLng(39.8965, 116.4074);
 
     private MapView mMapView;
     private List<MapPoint> datas = new ArrayList<>();
@@ -58,17 +59,24 @@ public class MapFragment extends BaseFragment {
         public void handleMessage(Message msg) {
             if (msg.what == 0x131) {
                 mProgressBar.setVisibility(View.INVISIBLE);
-                aMap.moveCamera(CameraUpdateFactory.newLatLng(datas.get(0).getLatLng()));
-                aMap.moveCamera(CameraUpdateFactory.zoomTo(17));
-                aMap.invalidate();
-                for (int i = 0; i < datas.size(); i++) {
-                    draw(datas.get(i).getLatLng(), datas.get(i).getState());
+                if (datas.get(0).getLatLng() == null) {
+                    aMap.moveCamera(CameraUpdateFactory.newLatLng(BEIJING));
+                } else {
+                    aMap.moveCamera(CameraUpdateFactory.newLatLng(datas.get(0).getLatLng()));
+                    aMap.moveCamera(CameraUpdateFactory.zoomTo(17));
+                    aMap.invalidate();
+                    for (int i = 0; i < datas.size(); i++) {
+                        draw(datas.get(i).getLatLng(), datas.get(i).getState());
+                    }
                 }
+            }
+            if (msg.what == 0x000) {
+                mProgressBar.setVisibility(View.INVISIBLE);
+                showToast("获取数据失败");
             }
         }
     };
 
-    private final static LatLng BEIJING = new LatLng(39.8965, 116.4074);
 
     @Override
     public String getTitle() {
@@ -151,24 +159,6 @@ public class MapFragment extends BaseFragment {
         mMapView.onDestroy();
     }
 
-    /**
-     * 绘制原点
-     */
-    /*public void draw(int zoom) {
-        *//*aMap.clear();
-        CircleOptions circleOptions = new CircleOptions();
-        circleOptions.fillColor(Color.BLUE);
-        circleOptions.center(BEIJING);
-        circleOptions.visible(true);
-        circleOptions.radius(2000);
-        circleOptions.strokeColor(Color.RED);
-        aMap.addCircle(circleOptions);*//*
-        aMap.clear();
-        GroundOverlayOptions groundOverlayOptions = new GroundOverlayOptions();
-        groundOverlayOptions.image(BitmapDescriptorFactory.fromResource(R.mipmap.ic_camera_alt_black_48dp));
-        groundOverlayOptions.position(BEIJING, getSize(zoom));
-        aMap.addGroundOverlay(groundOverlayOptions);
-    }*/
     private void draw(LatLng latLng, int state) {
         GroundOverlayOptions groundOverlayOptions = new GroundOverlayOptions();
         int id = R.mipmap.normal;
@@ -234,14 +224,13 @@ public class MapFragment extends BaseFragment {
                     if (mJSONObject.get("code").equals("200")) {
                         //解析数据
                         parseAll(mJSONObject, datas);
+                        mHandler.sendEmptyMessage(0x131);
                     } else {
-                        showToast("获取数据失败");
+                        mHandler.sendEmptyMessage(0x000);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    showToast("未知错误");
-                } finally {
-                    mHandler.sendEmptyMessage(0x131);
+                    mHandler.sendEmptyMessage(0x000);
                 }
             }
         }.start();
@@ -259,13 +248,11 @@ public class MapFragment extends BaseFragment {
         try {
             while (jsonObject.getJSONArray("data").get(i) != null) {
                 datas.add(parseData(jsonObject, i));
-//                Log.i(TAG, i + "XXXX");
                 i++;
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        //Log.i(TAG, datas.toString());
     }
 
     /**
@@ -278,16 +265,6 @@ public class MapFragment extends BaseFragment {
     private MapPoint parseData(JSONObject jsonObject, int index) {
         MapPoint mapPoint = new MapPoint();
         try {
-            /*
-            serializableLightPic.setId(Integer.parseInt(jsonObject.getJSONArray("data").getJSONObject(index).get("id").toString()));
-            serializableLightPic.setTitle(jsonObject.getJSONArray("data").getJSONObject(index).get("title").toString());
-            serializableLightPic.setTime(jsonObject.getJSONArray("data").getJSONObject(index).get("time").toString());
-            serializableLightPic.setDetail(jsonObject.getJSONArray("data").getJSONObject(index).get("detail").toString());
-            serializableLightPic.setPath(jsonObject.getJSONArray("data").getJSONObject(index).get("url").toString());
-            serializableLightPic.setLon();
-            serializableLightPic.setLat();
-            serializableLightPic.setAuthor(jsonObject.getJSONArray("data").getJSONObject(index).get("(SELECT username FROM users WHERE users.uid = storage.uid)").toString());
-            */
             mapPoint.setLatLng(
                     new LatLng(Double.parseDouble(jsonObject.getJSONArray("data").getJSONObject(index).get("lat").toString()),
                             Double.parseDouble(jsonObject.getJSONArray("data").getJSONObject(index).get("lon").toString())));

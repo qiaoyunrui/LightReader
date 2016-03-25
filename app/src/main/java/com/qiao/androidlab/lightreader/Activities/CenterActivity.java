@@ -96,6 +96,10 @@ public class CenterActivity extends AppCompatActivity {
                     showToast("上传失败");
                 }
             }
+            if (msg.what == 0x000) {
+                mProgressBar.setVisibility(View.INVISIBLE);
+                showToast("上传失败");
+            }
         }
     };
 
@@ -203,23 +207,14 @@ public class CenterActivity extends AppCompatActivity {
                     result = UploadUtil.upload(new URL(URL), new File(path));
                     Log.i(TAG, result);
                     result = HttpUtil.getJsonString(result);
+                    if (result.equals("<br />")) {   //上传图片失败
+                        mHandler.sendEmptyMessage(0x000);
+                        return;
+                    }
                     LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-                    /*if (ActivityCompat.checkSelfPermission(CenterActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                            ActivityCompat.checkSelfPermission(CenterActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                        requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
-                                        Manifest.permission.ACCESS_COARSE_LOCATION},
-                                1);
-                        Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                        lon = location.getLongitude();
-                        lat = location.getLatitude();
-                        Log.i(TAG,"lon is " + lon);
-                        Log.i(TAG,"lat is " + lat);
-                    }*/
                     Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
                     lon = location.getLongitude();
                     lat = location.getLatitude();
-                    //Log.i(TAG, "lon is " + lon);
-                    //Log.i(TAG, "lat is " + lat);
                     SharedPreferences sharedPreferences =
                             CenterActivity.this.getSharedPreferences(SHARED_PREFERENCE_SIGN, Context.MODE_PRIVATE);
                     int uid = sharedPreferences.getInt(USER_ID, 0);
@@ -230,13 +225,11 @@ public class CenterActivity extends AppCompatActivity {
                             + "&url=" + result
                             + "&lon=" + lon
                             + "&lat=" + lat;
-                    Log.i(TAG, para);
                     resultX = HttpUtil.sendPostRequest(URLX, para);
-                    Log.i(TAG, resultX);
                     mHandler.sendEmptyMessage(0x130);
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
-                    Log.i(TAG, "未知错误");
+                    mHandler.sendEmptyMessage(0x000);
                 }
 
             }

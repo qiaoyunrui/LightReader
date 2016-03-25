@@ -62,6 +62,10 @@ public class FindFragment extends BaseFragment {
                 adapter.notifyDataSetChanged();
                 mProgressBar.setVisibility(View.INVISIBLE);
             }
+            if (msg.what == 0x000) {
+                showToast("获取数据失败");
+                mProgressBar.setVisibility(View.INVISIBLE);
+            }
         }
     };
 
@@ -143,14 +147,13 @@ public class FindFragment extends BaseFragment {
                     if (mJSONObject.get("code").equals("200")) {
                         //解析数据
                         parseAll(mJSONObject, datas);
+                        handler.sendEmptyMessage(0x127);
                     } else {
-                        showToast("获取数据失败");
+                        handler.sendEmptyMessage(0x000);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    showToast("未知错误");
-                } finally {
-                    handler.sendEmptyMessage(0x127);
+                    handler.sendEmptyMessage(0x000);
                 }
             }
         }.start();
