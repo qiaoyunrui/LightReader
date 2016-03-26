@@ -1,5 +1,8 @@
 package com.qiao.androidlab.lightreader.Activities;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -22,7 +25,9 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.view.WindowManager;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
@@ -55,6 +60,8 @@ public class CameraActivity extends AppCompatActivity {
     private CameraUtil cameraUtil;
     private Intent settingIntent;
     private SharedPreferences sharedPreferences;
+
+    private View viewX;
 
     private Boolean light_source;   //光源 true false
     private int images_per_trial;   //拍照数量 1 2 3
@@ -130,6 +137,7 @@ public class CameraActivity extends AppCompatActivity {
                 cameraUtil.setStartPreView();
             }
         }
+        //showAnim();
     }
 
     @Override
@@ -151,19 +159,25 @@ public class CameraActivity extends AppCompatActivity {
         settingIntent = new Intent(this, SettingActivity.class);
     }
 
-
     private void initView() {
         toolbar = (Toolbar) findViewById(R.id.camera_toolbar);
         root = (RelativeLayout) findViewById(R.id.camera_root);
         surfaceView = (SurfaceView) findViewById(R.id.cameraSurface);
         drawSurfaceView = (DrawSurfaceView) findViewById(R.id.drawSurfaceView);
         capture = (AppCompatImageButton) findViewById(R.id.capture);
+        viewX = findViewById(R.id.viewX);
     }
 
     private void initEvent() {
         capture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ObjectAnimator anim = ObjectAnimator.ofFloat(capture, "rotation", 0f, 180f);
+                anim.setDuration(500);
+                anim.setInterpolator(new DecelerateInterpolator());
+                anim.start();
+                ObjectAnimator.ofFloat(capture, "scaleX", 1.0f, 1.2f).setDuration(500).start();
+                ObjectAnimator.ofFloat(capture, "scaleY", 1.0f, 1.2f).setDuration(500).start();
                 cameraUtil.capture();
             }
         });
@@ -222,5 +236,46 @@ public class CameraActivity extends AppCompatActivity {
     }
 
 
+    private void showAnim() {
+        /*
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        int[] location = new int[2];
+        fab.getLocationOnScreen(location);
+        int centerX = location[0];
+        int centerY = location[1];
+        Animator animShow = ViewAnimationUtils.createCircularReveal(reveal_view, centerX, centerY, 0, 1920);
+        animShow.setDuration(250);
+        reveal_view.setVisibility(View.VISIBLE);
+        animShow.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                startActivity(intent);
+                overridePendingTransition(0, 0);    //设置页面切换的效果
+            }
+        });
+        animShow.start();
+
+        */
+        int[] location = new int[2];
+        capture.getLocationOnScreen(location);
+        int centerX = location[0];
+        int centerY = location[1];
+        Animator animator;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            animator = ViewAnimationUtils.createCircularReveal(viewX, centerX, centerY, 1920, 0);
+            animator.setDuration(250);
+            animator.start();
+            animator.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    super.onAnimationEnd(animation);
+                    viewX.setVisibility(View.INVISIBLE);
+                }
+            });
+
+        }
+
+    }
 
 }

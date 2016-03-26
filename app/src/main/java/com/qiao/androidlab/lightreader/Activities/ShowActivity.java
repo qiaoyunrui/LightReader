@@ -6,6 +6,7 @@ package com.qiao.androidlab.lightreader.Activities;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -230,6 +231,7 @@ public class ShowActivity extends AppCompatActivity {
                         closeDataBase();
                         //Intent intent = new Intent(ShowActivity.this, MainActivity.class);
                         //startActivity(intent);
+                        //setResult();
                         finish();
                         /**
                          * 1.将图片保存在本地。oK

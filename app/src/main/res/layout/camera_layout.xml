@@ -31,7 +31,6 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:theme="@style/ThemeOverlay.AppCompat.ActionBar" />
 
-
     <android.support.v7.widget.AppCompatImageButton
         android:id="@+id/capture"
         android:layout_width="@dimen/button_capture_width"
@@ -39,29 +38,17 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_margin="@dimen/card_part_margin"
+        android:alpha="0.8"
         android:background="#000e0404"
         android:elevation="@dimen/capture_button_elevation"
         android:scaleType="centerCrop"
-        android:src="@mipmap/ic_camera_black_48dp" />
+        android:src="@mipmap/camera_write" />
 
-    <!--<android.support.v7.widget.AppCompatImageButton-->
-    <!--android:id="@+id/setting"-->
-    <!--android:layout_width="@dimen/button_setting_width"-->
-    <!--android:layout_height="@dimen/button_setting_height"-->
-    <!--android:layout_alignParentRight="true"-->
-    <!--android:layout_alignParentTop="true"-->
-    <!--android:background="#0000"-->
-    <!--android:scaleType="centerCrop"-->
-    <!--android:src="@mipmap/ic_settings_black_48dp" />-->
-
-    <!--<android.support.v7.widget.AppCompatImageButton-->
-    <!--android:id="@+id/back"-->
-    <!--android:layout_width="@dimen/button_setting_width"-->
-    <!--android:layout_height="@dimen/button_setting_height"-->
-    <!--android:layout_alignParentLeft="true"-->
-    <!--android:layout_alignParentTop="true"-->
-    <!--android:background="#0000"-->
-    <!--android:scaleType="centerCrop"-->
-    <!--android:src="@mipmap/ic_arrow_back_black_48dp" />-->
+    <View
+        android:id="@+id/viewX"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/accent"
+        android:visibility="invisible" />
 
 </RelativeLayout>
