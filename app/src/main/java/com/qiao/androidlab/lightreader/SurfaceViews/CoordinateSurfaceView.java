@@ -3,8 +3,10 @@ package com.qiao.androidlab.lightreader.SurfaceViews;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.CornerPathEffect;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.PathEffect;
 import android.graphics.Point;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -104,6 +106,7 @@ public class CoordinateSurfaceView extends SurfaceView implements SurfaceHolder.
      */
     public void setPixelsList(List<Integer> pixelsList) {
         this.pixelsList = pixelsList;
+        //invalidate();
     }
 
     /**
@@ -117,7 +120,6 @@ public class CoordinateSurfaceView extends SurfaceView implements SurfaceHolder.
                 drawBackground(mCanvas);
                 drawCoordinate(mCanvas);
                 drawGraph(mCanvas);
-
             }
         } catch (Exception e) {
         } finally {
@@ -180,6 +182,8 @@ public class CoordinateSurfaceView extends SurfaceView implements SurfaceHolder.
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setStrokeWidth(2);
         Path path = new Path();
+        PathEffect pathEffect = new CornerPathEffect(30);   //设置圆角·
+        mPaint.setPathEffect(pathEffect);
         path.moveTo(getGraphWidth(0), getGraphHeight(getGrayscale(pixelsList.get(0))));
         for (int i = 1; i < pixelsList.size(); i++) {
             path.lineTo(getGraphWidth(i), getGraphHeight(getGrayscale(pixelsList.get(i))));
