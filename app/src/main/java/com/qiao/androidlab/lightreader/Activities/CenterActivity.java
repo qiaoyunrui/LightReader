@@ -173,7 +173,7 @@ public class CenterActivity extends AppCompatActivity {
 
     private void initActionbar() {
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("光谱");
+        getSupportActionBar().setTitle("PH");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar();
@@ -213,12 +213,15 @@ public class CenterActivity extends AppCompatActivity {
                     }
                     LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
                     Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                    lon = location.getLongitude();
-                    lat = location.getLatitude();
+                    if (location != null) {
+                        lon = location.getLongitude();
+                        lat = location.getLatitude();
+                    }
+
                     SharedPreferences sharedPreferences =
                             CenterActivity.this.getSharedPreferences(SHARED_PREFERENCE_SIGN, Context.MODE_PRIVATE);
                     int uid = sharedPreferences.getInt(USER_ID, 0);
-                    String para = "title=" + title
+                    String para = "title=" + title + coordinateView.getPH()
                             + "&uid=" + uid
                             + "&time=" + time
                             + "&detail=" + detail

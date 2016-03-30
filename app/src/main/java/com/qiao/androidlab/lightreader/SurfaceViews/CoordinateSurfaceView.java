@@ -7,12 +7,13 @@ import android.graphics.CornerPathEffect;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PathEffect;
-import android.graphics.Point;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 /**
@@ -30,7 +31,7 @@ public class CoordinateSurfaceView extends SurfaceView implements SurfaceHolder.
     private int bitmapHeight;
     //画笔
     private Paint mPaint;
-
+    private String PH;
     private int margin = 40;
 
     /**
@@ -152,8 +153,8 @@ public class CoordinateSurfaceView extends SurfaceView implements SurfaceHolder.
         mCanvas.drawLine(margin - STROKE_WIDTH / 2, height - margin, width - margin, height - margin, mPaint);
         //绘制原点
         mPaint.setTextSize(30);
-        mCanvas.drawText("0", margin / 2, height - margin / 2, mPaint);
-        mCanvas.drawText("灰度值", margin, 2 * margin / 3, mPaint);
+        //mCanvas.drawText("0", margin / 2, height - margin / 2, mPaint);
+        mCanvas.drawText("PH", margin, 2 * margin / 3, mPaint);
         mCanvas.drawText("距离", width - 3 * margin / 2, height - margin / 2, mPaint);
         //绘制上箭头
         mCanvas.drawLine(margin / 2, margin * 2, margin, margin, mPaint);
@@ -163,12 +164,17 @@ public class CoordinateSurfaceView extends SurfaceView implements SurfaceHolder.
         mCanvas.drawLine(width - 2 * margin, height - margin / 2, width - margin, height - margin, mPaint);
         //绘制刻度
         mPaint.setStrokeWidth(10);
-        mPaint.setColor(Color.RED);
-        mCanvas.drawPoint(margin, height - margin - (height - 2 * margin) / 3, mPaint);
-        mCanvas.drawPoint(margin, height - margin - 2 * (height - 2 * margin) / 3, mPaint);
+        //mPaint.setColor(Color.RED);
+        //mCanvas.drawPoint(margin, height - margin - 2 * (height - 2 * margin) / 3, mPaint);
         mPaint.setColor(Color.BLACK);
+        for (int i = 0; i <= 14; i++) {
+            mCanvas.drawText(i + "", margin / 2, height - margin - i * (height - 2 * margin) / 16, mPaint);
+            mCanvas.drawPoint(margin, height - margin - i * (height - 2 * margin) / 16, mPaint);
+        }
+        /*
         mCanvas.drawText("100", margin / 2, height - margin - (height - 2 * margin) / 3, mPaint);
         mCanvas.drawText("200", margin / 2, height - margin - 2 * (height - 2 * margin) / 3, mPaint);
+        */
         Log.i("HELLO", "drawBackgroundAndCoordinate");
     }
 
@@ -185,11 +191,18 @@ public class CoordinateSurfaceView extends SurfaceView implements SurfaceHolder.
         PathEffect pathEffect = new CornerPathEffect(30);   //设置圆角·
         mPaint.setPathEffect(pathEffect);
         path.moveTo(getGraphWidth(0), getGraphHeight(getGrayscale(pixelsList.get(0))));
+        double avePH = 0.0;  //平均PH值为
         for (int i = 1; i < pixelsList.size(); i++) {
             path.lineTo(getGraphWidth(i), getGraphHeight(getGrayscale(pixelsList.get(i))));
-//            Log.i("HELLO", getGrayscale(pixelsList.get(i)) + "");
+            //Log.i("HELLO", getGrayscale(pixelsList.get(i)) + "");
+            avePH += getGrayscale(pixelsList.get(i)) / ((double) (pixelsList.size()));
         }
         mCanvas.drawPath(path, mPaint);
+        int height = getHeight();
+        int width = getWidth();
+        mCanvas.drawText("avePh: " + TextUtils.substring(avePH + "", 0, 4), width / 2, margin, mPaint);
+        DecimalFormat df = new DecimalFormat("0.0");
+        PH = df.format(avePH);
     }
 
     /**
@@ -198,8 +211,8 @@ public class CoordinateSurfaceView extends SurfaceView implements SurfaceHolder.
      * @param x
      * @return
      */
-    private int getGraphHeight(int x) {
-        return getHeight() - margin - ((getHeight() - 2 * margin) * x / 300);
+    private int getGraphHeight(double x) {
+        return (int) (getHeight() - margin - ((getHeight() - 2 * margin) * x / 16));
     }
 
     /**
@@ -213,14 +226,17 @@ public class CoordinateSurfaceView extends SurfaceView implements SurfaceHolder.
     }
 
     /**
-     * 获取灰度值
+     * 获取PH
      */
-    private int getGrayscale(int x) {
+    private double getGrayscale(int x) {
         int red = (x & 0x00ff0000) >> 16;
         int green = (x & 0x0000ff00) >> 8;
         int blue = x & 0x000000ff;
-        return (int) (0.3 * red + 0.59 * green + 0.11 * blue);
+        return 9.1992 - 0.0178 * red - 0.0001 * red * red - 0.0425 * green + 0.0002 * green * green + 0.0376 * blue - 0.0001 * blue * blue;
+        //9.1992 - 0.0178 * red - 0.0001 * red * red - 0.0425 * green + 0.0002 * green * green + 0.0376 * blue - 0.0001 * blue * blue
     }
 
-
+    public String getPH() {
+        return PH;
+    }
 }

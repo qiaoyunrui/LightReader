@@ -18,6 +18,7 @@ public class MapPoint {
 
     private int state = STATE_MEDIUM;   //状态
     private LatLng latLng;  //坐标点
+    private double PH = 0;
 
     public LatLng getLatLng() {
         return latLng;
@@ -46,4 +47,11 @@ public class MapPoint {
         this.state = state;
     }
 
+    public double getPH() {
+        return PH;
+    }
+
+    public void setPH(double PH) {
+        this.PH = PH;
+    }
 }

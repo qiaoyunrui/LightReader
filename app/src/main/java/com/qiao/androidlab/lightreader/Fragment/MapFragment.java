@@ -24,6 +24,8 @@ import com.amap.api.maps2d.model.CircleOptions;
 import com.amap.api.maps2d.model.GroundOverlayOptions;
 import com.amap.api.maps2d.model.LatLng;
 import com.amap.api.maps2d.model.MyLocationStyle;
+import com.amap.api.maps2d.model.TextOptions;
+import com.amap.api.maps2d.model.TextOptionsCreator;
 import com.qiao.androidlab.lightreader.Parts.MapPoint;
 import com.qiao.androidlab.lightreader.R;
 import com.qiao.androidlab.lightreader.RequestUtil.HttpUtil;
@@ -66,7 +68,8 @@ public class MapFragment extends BaseFragment {
                     aMap.moveCamera(CameraUpdateFactory.zoomTo(17));
                     aMap.invalidate();
                     for (int i = 0; i < datas.size(); i++) {
-                        draw(datas.get(i).getLatLng(), datas.get(i).getState());
+                        draw(datas.get(i).getLatLng(), datas.get(i).getState(), datas.get(i).getPH());
+                        Log.i(TAG, "PH is" + datas.get(i).getPH());
                     }
                 }
             }
@@ -159,7 +162,7 @@ public class MapFragment extends BaseFragment {
         mMapView.onDestroy();
     }
 
-    private void draw(LatLng latLng, int state) {
+    private void draw(LatLng latLng, int state, double PH) {
         GroundOverlayOptions groundOverlayOptions = new GroundOverlayOptions();
         int id = R.mipmap.normal;
         switch (state) {
@@ -176,6 +179,15 @@ public class MapFragment extends BaseFragment {
         groundOverlayOptions.image(BitmapDescriptorFactory.fromResource(id));
         groundOverlayOptions.position(latLng, 100);
         aMap.addGroundOverlay(groundOverlayOptions);
+        Log.i(TAG, PH + "");
+        if (PH > 0) {
+            TextOptions textOptions = new TextOptions();
+            textOptions.text(PH + "");
+            textOptions.position(latLng);
+            textOptions.fontSize(50);
+            aMap.addText(textOptions);
+        }
+
     }
 
 
@@ -269,9 +281,27 @@ public class MapFragment extends BaseFragment {
                     new LatLng(Double.parseDouble(jsonObject.getJSONArray("data").getJSONObject(index).get("lat").toString()),
                             Double.parseDouble(jsonObject.getJSONArray("data").getJSONObject(index).get("lon").toString())));
             mapPoint.setState(MapPoint.STATE_NORMAL);
+
+            mapPoint.setPH(
+                    Double.parseDouble(
+                            jsonObject
+                                    .getJSONArray("data")
+                                    .getJSONObject(index).get("title")
+                                    .toString()
+                                    .substring(jsonObject
+                                            .getJSONArray("data")
+                                            .getJSONObject(index).get("title")
+                                            .toString().length() - 3, jsonObject
+                                            .getJSONArray("data")
+                                            .getJSONObject(index).get("title")
+                                            .toString().length())));
+
+            //
         } catch (JSONException e) {
             e.printStackTrace();
             showToast("解析数据出现错误");
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
         return mapPoint;
     }
