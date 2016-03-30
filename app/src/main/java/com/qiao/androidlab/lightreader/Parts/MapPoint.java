@@ -20,14 +20,6 @@ public class MapPoint {
     private LatLng latLng;  //坐标点
     private double PH = 0;
 
-    public LatLng getLatLng() {
-        return latLng;
-    }
-
-    public void setLatLng(LatLng latLng) {
-        this.latLng = latLng;
-    }
-
     public MapPoint(LatLng latLng, int state) {
         this.latLng = latLng;
 
@@ -38,6 +30,13 @@ public class MapPoint {
 
     }
 
+    public LatLng getLatLng() {
+        return latLng;
+    }
+
+    public void setLatLng(LatLng latLng) {
+        this.latLng = latLng;
+    }
 
     public int getState() {
         return state;
